@@ -44,6 +44,32 @@ Participants must have a basic understanding with R and spatial data. Pre-worksh
 
  ------------
  
+# Workshop schedule
+
+<!-- Sessions will be on Saturdays 10 am - 1 pm -->
+<!-- [Link del proyecto en Rstudio Cloud](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)   -->
+<!-- [Link for shared folder](https://ucdavis.box.com/s/v2wlgjm16bl8vo02ujd7hk5yduuulywi) -->
+
+<!-- La idea de los laboratorios es que se expliquen por si mismos, por si los quieren revisar mas adelante. EN este curso introduciremos los laboratorios dando una breve explicacion, a la mitad del tiempo haremos una encuesta para ver el avance y revisar dudas, y los ultimos 5 minutos hablaremos de las conclusiones para cada laboratorio -->
+
+   - **Day 00 (optional):** Installation of software and office hours.  
+   
+   - **Day 01:** Getting started with Shiny.  
+    - Introduction  
+    - Architecture and structure of the app  
+    - Lab Ia: Creating your first app  
+    - Inputs outputs and server  
+    - Introduction to the data set we will be using  
+    - Lab Ib: Inputs and Outputs  
+  - **Day 02:** Setting up your development environment
+    - Designing the user interface
+    - Lab IIa: Introduction to shinydashboard
+    - Implementing user interaction
+    - Lab IIb: Reactivity  
+  - **Day 03:** Advance graphics and publishing your shiny app
+    - Advanced visualization tools
+    - Lab IIa: Integrating advanced visualizations.
+    - Getting ready your app for distribution.
  
  
 # Pre workshop materials
@@ -78,32 +104,3 @@ Other usefull information will be added here as we advance trough the workshop. 
 <!--   - https://datamexico.org -->
 <!--   - https://www.inegi.org.mx/app/mapa/espacioydatos/ -->
   
-
-
-
-# Workshop schedule
-
-<!-- Sessions will be on Saturdays 10 am - 1 pm -->
-<!-- [Link del proyecto en Rstudio Cloud](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)   -->
-[Link for shared folder](https://ucdavis.box.com/s/v2wlgjm16bl8vo02ujd7hk5yduuulywi)
-
-<!-- La idea de los laboratorios es que se expliquen por si mismos, por si los quieren revisar mas adelante. EN este curso introduciremos los laboratorios dando una breve explicacion, a la mitad del tiempo haremos una encuesta para ver el avance y revisar dudas, y los ultimos 5 minutos hablaremos de las conclusiones para cada laboratorio -->
-
-   - **Day 00 (optional):** Installation of software and office hours.  
-   
-   - **Day 01:** Getting started with Shiny.  
-    - Introduction  
-    - Architecture and structure of the app  
-    - Lab Ia: Creating your first app  
-    - Inputs outputs and server  
-    - Introduction to the data set we will be using  
-    - Lab Ib: Inputs and Outputs  
-  - **Day 02:** Setting up your development environment
-    - Designing the user interface
-    - Lab IIa: Introduction to shinydashboard
-    - Implementing user interaction
-    - Lab IIb: Reactivity  
-  - **Day 03:** Advance graphics and publishing your shiny app
-    - Advanced visualization tools
-    - Lab IIa: Integrating advanced visualizations.
-    - Getting ready your app for distribution.
