@@ -16,7 +16,7 @@ output:
 
 # Objectives:
 
-The objective of this workshop is to familiarize with the development of web apps using R and Shiny. Students will learn how to import, clean and process geospatial data with R to generate maps and other visualizations, and how to translate those into a interactive web dashboard that can be distributed and shared. By completing this workshop you will be able to:
+The objective of this workshop is to familiarize with the development of web apps using R and Shiny. Students will learn how to clean and process geospatial data with R to generate maps and other visualizations, and how to translate those into a interactive web dashboard that can be distributed and shared. By completing this workshop you will be able to:
   
   - Identify the basic components for a shiny app
   - Generate static and interactive maps with R
@@ -83,20 +83,20 @@ Other usefull information will be added here as we advance trough the workshop. 
 
 # Workshop schedule
 
-Sessions will be on Saturdays 10 am - 1 pm
+<!-- Sessions will be on Saturdays 10 am - 1 pm -->
 <!-- [Link del proyecto en Rstudio Cloud](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)   -->
 [Link for shared folder](https://ucdavis.box.com/s/v2wlgjm16bl8vo02ujd7hk5yduuulywi)
 
 <!-- La idea de los laboratorios es que se expliquen por si mismos, por si los quieren revisar mas adelante. EN este curso introduciremos los laboratorios dando una breve explicacion, a la mitad del tiempo haremos una encuesta para ver el avance y revisar dudas, y los ultimos 5 minutos hablaremos de las conclusiones para cada laboratorio -->
 
-   - **Day 00 (optional):** Installation of software and office hours.
+   - **Day 00 (optional):** Installation of software and office hours.  
    
-   - **Day 01:** Getting started with Shiny.
-    - Introduction
-    - Architecture and structure of the app
-    - Lab Ia: Creating your first app
-    - Inputs outputs and server
-    - Introduction to the data set we will be using
+   - **Day 01:** Getting started with Shiny.  
+    - Introduction  
+    - Architecture and structure of the app  
+    - Lab Ia: Creating your first app  
+    - Inputs outputs and server  
+    - Introduction to the data set we will be using  
     - Lab Ib: Inputs and Outputs  
   - **Day 02:** Setting up your development environment
     - Designing the user interface
