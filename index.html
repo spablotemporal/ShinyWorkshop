@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Interactive geospatial visualization dashboards with R and Shiny.</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="width: 30px;" src="img/logo-nb.png" /></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pre Workshop
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="0a_Intro_req.html">Prerequsites</a>
+    </li>
+    <li>
+      <a href="0b_Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="0c_Spatial_intro.html">Intro to Spatial data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Contact
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Instructors.html">
+        <span class="fa fa-users"></span>
+         
+        Instructor
+      </a>
+    </li>
+    <li>
+      <a href="https://cadms.vetmed.ucdavis.edu">
+        <span class="fa fa-server"></span>
+         
+        CADMS Website
+      </a>
+    </li>
+    <li>
+      <a href="mailto:jpgo@ucdavis.edu">
+        <span class="fa fa-envelope"></span>
+         
+        Email
+      </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Interactive geospatial visualization dashboards with R and Shiny.</h1>
+
+</div>
+
+
+<!-- # Informacion general -->
+<!-- La visualización de datos forma parte escencial de la comunicación en la ciencia. Con los avances tecnológicos en la recolección y disponibilidad de la información, las bases de datos son cada vez más complejas en cuanto a su estructura. Las herramientas tradicionales de visualización de datos estática han sido efectivas para la comunicación de resultados en la ciencia, pero presentan algunas limitaciones al presentar  análisis de bases de datos con estructuras jerárquicas espacio-temporales. Herramientas que permiten la interacción con el usuario son cada vez más comunes para ser usadas para la exploración y análisis de datos. El software estadístico R ha sido adoptado por analistas de datos e investigadores en diferentes áreas del conocimiento incluyendo, salud pública y epidemiología. En este curso se discutirán algunos conceptos en estrategias para el desarrollo de aplicaciones web que pueden ser usadas para explorar y presentar resultados con bases de datos complejas. Por medio de laboratorios prácticos, los instructores guían a los participantes para desarrollar sus propias aplicaciones y las puedan desplegar en servidores web con el objetivo de comunicar los resultados de análisis de la información. -->
+<hr />
+<div id="objectives" class="section level1">
+<h1>Objectives:</h1>
+<p>The objective of this workshop is to familiarize with the development of web apps using R and Shiny. Students will learn how to import, clean and process geospatial data with R to generate maps and other visualizations, and how to translate those into a interactive web dashboard that can be distributed and shared. By completing this workshop you will be able to:</p>
+<ul>
+<li>Identify the basic components for a shiny app</li>
+<li>Generate static and interactive maps with R</li>
+<li>Strategies to make your app more efficient</li>
+<li>Upload your application to a server so it can be shared and distributed.</li>
+</ul>
+<p>Previous knowledge with geospatial data and R programming is desired, but not mandatory. Pre workshop materials covering the basics of R and geospatial data will be provided a few days before the workshop.</p>
+<hr />
+</div>
+<div id="who-is-this-course-for" class="section level1">
+<h1>Who is this course for?</h1>
+<p>Participants must have a basic understanding with R and spatial data. Pre-workshop materials and office hours will be offered to help with any questions regarding the material and installation of software. It is expected that the participants will already have installed the software since day 01 of the workshop.</p>
+<div id="tools-we-will-use" class="section level2">
+<h2>Tools we will use</h2>
+<ul>
+<li>Computer</li>
+<li><a href="https://cloud.r-project.org">R</a></li>
+<li><a href="https://www.rstudio.com/products/rstudio/">Rstudio</a></li>
+<li><a href="https://www.shinyapps.io">Shiny account</a></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="pre-workshop-materials" class="section level1">
+<h1>Pre workshop materials</h1>
+<p>It is highly encouraged, that the participants have a look at the pre workshop material before the start of of the workshop. The pre-workshop materials consist on 3 labs that cover the basics of R and spatial data manipulation. The <em>day 0</em> will consist on office hours to assit the participants with any problems or questions regarding the pre-workshop materials, It is expected that the participants will have already the software installed and ready to go since day 01 of the workshop.<br />
+You can access the pre-workshop materials in the following links:</p>
+<ul>
+<li><a href="0a_Intro_req.html">Software installation</a><br />
+</li>
+<li><a href="0b_Intro_to_R.html">Intro to R</a><br />
+</li>
+<li><a href="0c_Spatial_intro.html">Intro to Spatial data</a></li>
+</ul>
+</div>
+<div id="other-links" class="section level1">
+<h1>Other links:</h1>
+<p>Other usefull information will be added here as we advance trough the workshop. This material will be often referenced during the sessions.</p>
+<ul>
+<li><a href="https://www.r-graph-gallery.com">R graph gallery</a>, Examples of different types of plots in R.<br />
+</li>
+<li><a href="https://epsg.io">EPSG</a>, Database of coordinate reference systems.<br />
+</li>
+<li><a href="https://shiny.rstudio.com/gallery/">Shiny gallery</a>. Examples of shiny apps.<br />
+<!-- - [Shiny widget gallery](https://shiny.rstudio.com/gallery/widget-gallery.html) --> <!-- - [Shiny tags glossary](https://shiny.rstudio.com/articles/tag-glossary.html), Differentes shiny tags que puedes usar para tu interfaz de usuario.   --> <!-- - [Pagina de documentacion de la libreria plotly](https://plotly.com/r/) --> <!-- - [Documentacion de ShinyDash](https://rstudio.github.io/shinydashboard/structure.html) --> <!-- - [Shiny cheatsheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf) --> <!-- - [Otras paqueterias para graficos interactivos](https://www.htmlwidgets.org/showcase_leaflet.html) --></li>
+</ul>
+<!-- Algunas fuentes de datos para el proyecto -->
+<!--   - https://www.kaggle.com/datasets -->
+<!--   - http://www.mgc.ac.cn/cgi-bin/DBatVir/main.cgi?func=map -->
+<!--   - https://wahis.oie.int/#/home -->
+<!--   - https://datos.cdmx.gob.mx -->
+<!--   - https://datamexico.org -->
+<!--   - https://www.inegi.org.mx/app/mapa/espacioydatos/ -->
+</div>
+<div id="workshop-schedule" class="section level1">
+<h1>Workshop schedule</h1>
+<p>Sessions will be on Saturdays 10 am - 1 pm <!-- [Link del proyecto en Rstudio Cloud](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)   --> <a href="https://ucdavis.box.com/s/v2wlgjm16bl8vo02ujd7hk5yduuulywi">Link for shared folder</a></p>
+<!-- La idea de los laboratorios es que se expliquen por si mismos, por si los quieren revisar mas adelante. EN este curso introduciremos los laboratorios dando una breve explicacion, a la mitad del tiempo haremos una encuesta para ver el avance y revisar dudas, y los ultimos 5 minutos hablaremos de las conclusiones para cada laboratorio -->
+<ul>
+<li><p><strong>Day 00 (optional):</strong> Installation of software and office hours.</p></li>
+<li><p><strong>Day 01:</strong> Getting started with Shiny. - Introduction - Architecture and structure of the app - Lab Ia: Creating your first app - Inputs outputs and server - Introduction to the data set we will be using - Lab Ib: Inputs and Outputs<br />
+</p></li>
+<li><p><strong>Day 02:</strong> Setting up your development environment</p>
+<ul>
+<li>Designing the user interface</li>
+<li>Lab IIa: Introduction to shinydashboard</li>
+<li>Implementing user interaction</li>
+<li>Lab IIb: Reactivity<br />
+</li>
+</ul></li>
+<li><p><strong>Day 03:</strong> Advance graphics and publishing your shiny app</p>
+<ul>
+<li>Advanced visualization tools</li>
+<li>Lab IIa: Integrating advanced visualizations.</li>
+<li>Getting ready your app for distribution.</li>
+</ul></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+name: "CADMS"  
+author: "Jose Pablo Gomez-Vazquez"  
+output_dir: "."  
+output:  
+  html_document:  
+    self_contained: no  
+    theme: cosmo  
+navbar:
+  logo:
+    image: Images/LogoNB.png
+    href: https://www.rstudio.com
+  title: "<img id=\"logo\" style=\"width: 30px;\" src=\"img/logo-nb.png\" />"
+  left:
+  - text: Home
+    href: index.html
+  - text: Pre Workshop 
+    menu:
+    - text: Prerequsites
+      href: '0a_Intro_req.html'
+    - text: Intro to R
+      href: '0b_Intro_to_R.html'
+    - text: Intro to Spatial data
+      href: '0c_Spatial_intro.html'
+  
+  - text: Contact
+    menu:
+    - icon: fa-users
+      text: Instructor
+      href: Instructors.html
+    - icon: fa-server
+      text: CADMS Website
+      href: https://cadms.vetmed.ucdavis.edu
+    - icon: fa-envelope
+      text: Email
+      href: mailto:jpgo@ucdavis.edu
