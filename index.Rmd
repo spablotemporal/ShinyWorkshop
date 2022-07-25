@@ -1,0 +1,109 @@
+---
+title: "Interactive geospatial visualization dashboards with R and Shiny."
+output:
+  html_document:
+    df_print: paged
+---
+
+
+<!-- # Informacion general -->
+
+<!-- La visualización de datos forma parte escencial de la comunicación en la ciencia. Con los avances tecnológicos en la recolección y disponibilidad de la información, las bases de datos son cada vez más complejas en cuanto a su estructura. Las herramientas tradicionales de visualización de datos estática han sido efectivas para la comunicación de resultados en la ciencia, pero presentan algunas limitaciones al presentar  análisis de bases de datos con estructuras jerárquicas espacio-temporales. Herramientas que permiten la interacción con el usuario son cada vez más comunes para ser usadas para la exploración y análisis de datos. El software estadístico R ha sido adoptado por analistas de datos e investigadores en diferentes áreas del conocimiento incluyendo, salud pública y epidemiología. En este curso se discutirán algunos conceptos en estrategias para el desarrollo de aplicaciones web que pueden ser usadas para explorar y presentar resultados con bases de datos complejas. Por medio de laboratorios prácticos, los instructores guían a los participantes para desarrollar sus propias aplicaciones y las puedan desplegar en servidores web con el objetivo de comunicar los resultados de análisis de la información. -->
+
+
+ ------------
+
+
+# Objectives:
+
+The objective of this workshop is to familiarize with the development of web apps using R and Shiny. Students will learn how to import, clean and process geospatial data with R to generate maps and other visualizations, and how to translate those into a interactive web dashboard that can be distributed and shared. By completing this workshop you will be able to:
+  
+  - Identify the basic components for a shiny app
+  - Generate static and interactive maps with R
+  - Strategies to make your app more efficient 
+  - Upload your application to a server so it can be shared and distributed. 
+
+Previous knowledge with geospatial data and R programming is desired, but not mandatory. Pre workshop materials covering the basics of R and geospatial data will be provided a few days before the workshop.
+
+
+ ------------
+
+
+
+# Who is this course for?
+
+Participants must have a basic understanding with R and spatial data. Pre-workshop materials and office hours will be offered to help with any questions regarding the material and installation of software. It is expected that the participants will already have installed the software since day 01 of the workshop.
+
+## Tools we will use
+  
+  - Computer
+  - [R](https://cloud.r-project.org)
+  - [Rstudio](https://www.rstudio.com/products/rstudio/)
+  - [Shiny account](https://www.shinyapps.io)
+
+
+ ------------
+ 
+ 
+ 
+# Pre workshop materials
+
+It is highly encouraged, that the participants have a look at the pre workshop material before the start of of the workshop. The pre-workshop materials consist on 3 labs that cover the basics of R and spatial data manipulation. The *day 0* will consist on office hours to assit the participants with any problems or questions regarding the pre-workshop materials, It is expected that the participants will have already the software installed and ready to go since day 01 of the workshop.  
+You can access the pre-workshop materials in the following links:  
+  
+  - [Software installation](0a_Intro_req.html)  
+  - [Intro to R](0b_Intro_to_R.html)  
+  - [Intro to Spatial data](0c_Spatial_intro.html)
+  
+
+# Other links:
+Other usefull information will be added here as we advance trough the workshop. This material will be often referenced during the sessions.  
+
+  - [R graph gallery](https://www.r-graph-gallery.com), Examples of different types of plots in R.  
+  - [EPSG](https://epsg.io), Database of coordinate reference systems.  
+  - [Shiny gallery](https://shiny.rstudio.com/gallery/). Examples of shiny apps.  
+  <!-- - [Shiny widget gallery](https://shiny.rstudio.com/gallery/widget-gallery.html) -->
+  <!-- - [Shiny tags glossary](https://shiny.rstudio.com/articles/tag-glossary.html), Differentes shiny tags que puedes usar para tu interfaz de usuario.   -->
+  <!-- - [Pagina de documentacion de la libreria plotly](https://plotly.com/r/) -->
+  <!-- - [Documentacion de ShinyDash](https://rstudio.github.io/shinydashboard/structure.html) -->
+  <!-- - [Shiny cheatsheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf) -->
+  <!-- - [Otras paqueterias para graficos interactivos](https://www.htmlwidgets.org/showcase_leaflet.html) -->
+  
+<!-- Algunas fuentes de datos para el proyecto -->
+
+<!--   - https://www.kaggle.com/datasets -->
+<!--   - http://www.mgc.ac.cn/cgi-bin/DBatVir/main.cgi?func=map -->
+<!--   - https://wahis.oie.int/#/home -->
+<!--   - https://datos.cdmx.gob.mx -->
+<!--   - https://datamexico.org -->
+<!--   - https://www.inegi.org.mx/app/mapa/espacioydatos/ -->
+  
+
+
+
+# Workshop schedule
+
+Sessions will be on Saturdays 10 am - 1 pm
+<!-- [Link del proyecto en Rstudio Cloud](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)   -->
+[Link for shared folder](https://ucdavis.box.com/s/v2wlgjm16bl8vo02ujd7hk5yduuulywi)
+
+<!-- La idea de los laboratorios es que se expliquen por si mismos, por si los quieren revisar mas adelante. EN este curso introduciremos los laboratorios dando una breve explicacion, a la mitad del tiempo haremos una encuesta para ver el avance y revisar dudas, y los ultimos 5 minutos hablaremos de las conclusiones para cada laboratorio -->
+
+   - **Day 00 (optional):** Installation of software and office hours.
+   
+   - **Day 01:** Getting started with Shiny.
+    - Introduction
+    - Architecture and structure of the app
+    - Lab Ia: Creating your first app
+    - Inputs outputs and server
+    - Introduction to the data set we will be using
+    - Lab Ib: Inputs and Outputs  
+  - **Day 02:** Setting up your development environment
+    - Designing the user interface
+    - Lab IIa: Introduction to shinydashboard
+    - Implementing user interaction
+    - Lab IIb: Reactivity  
+  - **Day 03:** Advance graphics and publishing your shiny app
+    - Advanced visualization tools
+    - Lab IIa: Integrating advanced visualizations.
+    - Getting ready your app for distribution.
