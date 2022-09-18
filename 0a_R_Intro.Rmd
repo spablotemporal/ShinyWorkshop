@@ -1,0 +1,75 @@
+---
+title: "Getting everything ready"
+output:
+  html_document:
+    df_print: paged
+---
+
+# R and R studio
+
+In this workshop we will be using R and R studio:
+
+- [Download R](https://cloud.r-project.org), R is the programming language and software we will use to develop our dashboard.
+- [Download R studio](https://www.rstudio.com/products/rstudio/), R studio is a integrated development environment (IDE) that uses provides a more user friendly interface to use R and integrate it with other tools such as python, markdown, among others.
+
+We need to have both installed in our local computer to be able to go trough this workshop.
+
+# R studio and projects.
+
+When we start R studio, we can see 4 sections:
+
+  1. **Source** (top left), here we have our code editor and other files. We will use this section to edit and view our scripts and other documents we will be using to interact with R.
+  2. **Console and Terminal** (bottom left), this is where the code is executed (*Console* will execute R code and *Terminal* other code for your operating system). We can directly write the code here, but normally we will be using the other source files such as .R or .Rmd to write our code which then will be send here.  
+  3. **Environment, History and others** (top right), Environment will list all the objects you create and History will have the code you sent to the console. There are other tabs in this section which we wont be using for now.
+  4. **Files, Packages and Help** (bottom right). This section includes a file browser, and other tabs for package management and help.
+  
+<img src="img/I_a.png" style="width:100%" align="center">
+
+## R projects
+
+One of the most useful features of R studio is the project organization, if you haven, I strongly encourage you to familiarize with creating and using projects to organize your workflow. Projects allow to create a file that will contain all the information regarding your session (including objects, data sets and configurations) and organize your files in folders in your system. This is particularly useful when we are working with multiple topics.  
+When you open Rstudio for the first time it starts on an empty project. To create a new project, just go to the top right corner menu and select *New Project...*
+
+<img src="img/Ia_01-NewProj.png" style="width:50%" align="center">
+
+Then will five you the option to create a new project in a new directory, un an existing directory or version control. For today, we wont be talking about version control in detail, but this is to integrate Rstudio with Github.
+
+<img src="img/Ia_02-NewProj.png" style="width:30%" align="center">
+  
+Once you have selected the option that you want, it will show you multimple options for types of projects, you can select *New project* and continue.  
+
+<img src="img/Ia_03-NewProj.png" style="width:30%" align="center">
+
+Then you just name your directory and select a location.  
+
+<img src="img/Ia_04-NewProj.png" style="width:30%" align="center">
+
+Once the project is created, in the files tab you will see that Rstudio created the files for your project in the folder that you selected. The project organization depends on your personal preferences, but I usuallly like to create 3 folders (code, data and docs) to organice my files related with the current project.
+
+<img src="img/Ia_05-NewProj.png" style="width:30%" align="center">
+
+# Shiny
+
+Shiny is the platform we will be using for the development of our interactive dashboards. Shiny is an R library, which means it runs from R. If you haven't, you can install the library running `install.package(shiny)` directly form the R console. We can develop and run our applications locally, but if we want to share it, we can also uploaded to a server and make it accessible via a website that can be accessed in any device with internet connection. In this workshop we will eventually do this, so we will need a [shinyapps](https://www.shinyapps.io) account, which is free. We will configure our shiny account with Rstudio next:
+
+
+## Creating and authorizing your shinny account
+
+Go to the main page of [shinyapps](https://www.shinyapps.io) and follow the link that says *sign up*:  
+  
+<img src="img/0_Shiny00_signup.png" style="width:60%" align="center">
+  
+You can create an account linking an existing github or google account.
+
+<img src="img/0_Shiny01_LogIn.png" style="width:60%" align="center">
+  
+Once you created your account and access, you have to go to the dashboard and follow the instructions to authorize your account in Rstudio. Make sure that in the step 2 activate the button that says *Show secret*, which will show you the complete code for you to copy.
+
+<img src="img/0_Shiny02_authorize.png" style="width:60%" align="center">
+  
+To authorize your shiny account in Rstudio, copy the code from the dashboard in the R studio console. For this to work you must make sure you have installed the library `rsconnect`.  
+To verify that it has been authorized, we can go to *Preferencias*, either from the menu in the top, or with the shortcut`ctrl + ,` in windows or `cmd + ,` for Mac, now we should see our account authorized in the menu for the *Publishing* section.
+
+<img src="img/0_Shiny03_prefVer.png" style="width:60%" align="center">
+
+If you can see your account, you are ready to start developing your apps!

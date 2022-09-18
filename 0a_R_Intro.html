@@ -11,7 +11,7 @@
 
 
 
-<title>Interactive geospatial visualization dashboards with R and Shiny.</title>
+<title>Getting everything ready</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -312,110 +312,62 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Interactive geospatial visualization dashboards with R and Shiny.</h1>
+<h1 class="title toc-ignore">Getting everything ready</h1>
 
 </div>
 
 
-<!-- Send to Rick: -->
-<!--   - [x] *A short bio about yourself*  -->
-<!--   - [x] *Learning objectives for the class ("By completing this workshop you will be able to......")* -->
-<!--   In this workshop you will learn the basics of developing your own interactive dashboard for geospatial visualization using R and shiny. We will cover diffferent topics such as: static and interactive maps, other non-spatial visualizations, strategies to make the app more efficient, how to publish your dashboard online. The goal is that by the end of the workshop each student feel comfortable on the development of interactive dahsboards.  -->
-<!--   - [x] *What software students will need (and installation links)* -->
-<!--   We will be using R and Rstudio. To publish your app online you will also need an account of shiny -->
-<!--   - [x] *What prerequisite skills (if any) students will need* -->
-<!--   Previous knowledge of R programing and geospatial data is helpful, but not mandatory. -->
-<!--   - [ ] *What you will cover on Sept. 27 for the optional session* -->
-<!--   Th first session will go over the pre-workshop materials  -->
-<!--  ------------ -->
-<div id="objectives" class="section level1">
-<h1>Objectives:</h1>
-<p>The objective of this workshop is to familiarize with the development of web apps using R and Shiny. Students will learn how to clean and process geospatial data with R to generate maps and other visualizations, and how to translate those into a interactive web dashboard that can be distributed and shared. By completing this workshop you will be able to:</p>
+<div id="r-and-r-studio" class="section level1">
+<h1>R and R studio</h1>
+<p>In this workshop we will be using R and R studio:</p>
 <ul>
-<li>Identify the basic components for a shiny app</li>
-<li>Generate static and interactive maps with R</li>
-<li>Strategies to make your app more efficient</li>
-<li>Upload your application to a server so it can be shared and distributed.</li>
+<li><a href="https://cloud.r-project.org">Download R</a>, R is the programming language and software we will use to develop our dashboard.</li>
+<li><a href="https://www.rstudio.com/products/rstudio/">Download R studio</a>, R studio is a integrated development environment (IDE) that uses provides a more user friendly interface to use R and integrate it with other tools such as python, markdown, among others.</li>
 </ul>
-<p>Previous knowledge with geospatial data and R helpful is desired, but not mandatory. Pre workshop materials covering the basics of R and geospatial data will be provided a few days before the workshop.</p>
-<hr />
+<p>We need to have both installed in our local computer to be able to go trough this workshop.</p>
 </div>
-<div id="who-is-this-course-for" class="section level1">
-<h1>Who is this course for?</h1>
-<p>Participants must have a basic understanding with R and spatial data. Pre-workshop materials and office hours will be offered to help with any questions regarding the material and installation of software. It is expected that the participants will already have installed the software since day 01 of the workshop.</p>
-<div id="tools-we-will-use" class="section level2">
-<h2>Tools we will use</h2>
-<ul>
-<li>Computer</li>
-<li><a href="https://cloud.r-project.org">R</a></li>
-<li><a href="https://www.rstudio.com/products/rstudio/">Rstudio</a></li>
-<li><a href="https://www.shinyapps.io">Shiny account</a></li>
-</ul>
-<hr />
+<div id="r-studio-and-projects." class="section level1">
+<h1>R studio and projects.</h1>
+<p>When we start R studio, we can see 4 sections:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Source</strong> (top left), here we have our code editor and other files. We will use this section to edit and view our scripts and other documents we will be using to interact with R.</li>
+<li><strong>Console and Terminal</strong> (bottom left), this is where the code is executed (<em>Console</em> will execute R code and <em>Terminal</em> other code for your operating system). We can directly write the code here, but normally we will be using the other source files such as .R or .Rmd to write our code which then will be send here.<br />
+</li>
+<li><strong>Environment, History and others</strong> (top right), Environment will list all the objects you create and History will have the code you sent to the console. There are other tabs in this section which we wont be using for now.</li>
+<li><strong>Files, Packages and Help</strong> (bottom right). This section includes a file browser, and other tabs for package management and help.</li>
+</ol>
+<p><img src="img/I_a.png" style="width:100%" align="center"></p>
+<div id="r-projects" class="section level2">
+<h2>R projects</h2>
+<p>One of the most useful features of R studio is the project organization, if you haven, I strongly encourage you to familiarize with creating and using projects to organize your workflow. Projects allow to create a file that will contain all the information regarding your session (including objects, data sets and configurations) and organize your files in folders in your system. This is particularly useful when we are working with multiple topics.<br />
+When you open Rstudio for the first time it starts on an empty project. To create a new project, just go to the top right corner menu and select <em>New Project…</em></p>
+<p><img src="img/Ia_01-NewProj.png" style="width:50%" align="center"></p>
+<p>Then will five you the option to create a new project in a new directory, un an existing directory or version control. For today, we wont be talking about version control in detail, but this is to integrate Rstudio with Github.</p>
+<p><img src="img/Ia_02-NewProj.png" style="width:30%" align="center"></p>
+<p>Once you have selected the option that you want, it will show you multimple options for types of projects, you can select <em>New project</em> and continue.</p>
+<p><img src="img/Ia_03-NewProj.png" style="width:30%" align="center"></p>
+<p>Then you just name your directory and select a location.</p>
+<p><img src="img/Ia_04-NewProj.png" style="width:30%" align="center"></p>
+<p>Once the project is created, in the files tab you will see that Rstudio created the files for your project in the folder that you selected. The project organization depends on your personal preferences, but I usuallly like to create 3 folders (code, data and docs) to organice my files related with the current project.</p>
+<p><img src="img/Ia_05-NewProj.png" style="width:30%" align="center"></p>
 </div>
 </div>
-<div id="pre-workshop-materials" class="section level1">
-<h1>Pre workshop materials</h1>
-<p>It is highly encouraged, that the participants have a look at the pre workshop material before the start of of the workshop. The pre-workshop materials consist on 3 labs that cover the basics of R and spatial data manipulation. The <em>day 0</em> will consist on office hours to assist the participants with any problems or questions regarding the pre-workshop materials, It is expected that the participants will have already the software installed and ready to go since day 01 of the workshop.<br />
-You can access the pre-workshop materials in the following links:</p>
-<ul>
-<li><a href="0a_Intro_req.html">Software installation</a><br />
-</li>
-<li><a href="0b_Intro_to_R.html">Intro to R</a><br />
-</li>
-<li><a href="0c_Spatial_intro.html">Intro to Spatial data</a></li>
-</ul>
+<div id="shiny" class="section level1">
+<h1>Shiny</h1>
+<p>Shiny is the platform we will be using for the development of our interactive dashboards. Shiny is an R library, which means it runs from R. If you haven’t, you can install the library running <code>install.package(shiny)</code> directly form the R console. We can develop and run our applications locally, but if we want to share it, we can also uploaded to a server and make it accessible via a website that can be accessed in any device with internet connection. In this workshop we will eventually do this, so we will need a <a href="https://www.shinyapps.io">shinyapps</a> account, which is free. We will configure our shiny account with Rstudio next:</p>
+<div id="creating-and-authorizing-your-shinny-account" class="section level2">
+<h2>Creating and authorizing your shinny account</h2>
+<p>Go to the main page of <a href="https://www.shinyapps.io">shinyapps</a> and follow the link that says <em>sign up</em>:</p>
+<p><img src="img/0_Shiny00_signup.png" style="width:60%" align="center"></p>
+<p>You can create an account linking an existing github or google account.</p>
+<p><img src="img/0_Shiny01_LogIn.png" style="width:60%" align="center"></p>
+<p>Once you created your account and access, you have to go to the dashboard and follow the instructions to authorize your account in Rstudio. Make sure that in the step 2 activate the button that says <em>Show secret</em>, which will show you the complete code for you to copy.</p>
+<p><img src="img/0_Shiny02_authorize.png" style="width:60%" align="center"></p>
+<p>To authorize your shiny account in Rstudio, copy the code from the dashboard in the R studio console. For this to work you must make sure you have installed the library <code>rsconnect</code>.<br />
+To verify that it has been authorized, we can go to <em>Preferencias</em>, either from the menu in the top, or with the shortcut<code>ctrl + ,</code> in windows or <code>cmd + ,</code> for Mac, now we should see our account authorized in the menu for the <em>Publishing</em> section.</p>
+<p><img src="img/0_Shiny03_prefVer.png" style="width:60%" align="center"></p>
+<p>If you can see your account, you are ready to start developing your apps!</p>
 </div>
-<div id="workshop-schedule" class="section level1">
-<h1>Workshop schedule</h1>
-<!-- Sessions will be on Saturdays 10 am - 1 pm -->
-<!-- [Link del proyecto en Rstudio Cloud](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)   -->
-<!-- [Link for shared folder](https://ucdavis.box.com/s/v2wlgjm16bl8vo02ujd7hk5yduuulywi) -->
-<!-- La idea de los laboratorios es que se expliquen por si mismos, por si los quieren revisar mas adelante. EN este curso introduciremos los laboratorios dando una breve explicacion, a la mitad del tiempo haremos una encuesta para ver el avance y revisar dudas, y los ultimos 5 minutos hablaremos de las conclusiones para cada laboratorio -->
-<ul>
-<li><p><strong>Day 00 (optional):</strong> Installation of software and office hours.</p></li>
-<li><p><strong>Day 01:</strong> Getting started with Shiny.<br />
-- Introduction<br />
-- Architecture and structure of the app<br />
-- Lab Ia: Creating your first app<br />
-- Inputs outputs and server<br />
-- Introduction to the data set we will be using<br />
-- Lab Ib: Inputs and Outputs<br />
-</p></li>
-<li><p><strong>Day 02:</strong> Setting up your development environment</p>
-<ul>
-<li>Designing the user interface</li>
-<li>Lab IIa: Introduction to shinydashboard</li>
-<li>Implementing user interaction</li>
-<li>Lab IIb: Reactivity<br />
-</li>
-</ul></li>
-<li><p><strong>Day 03:</strong> Advance graphics and publishing your shiny app</p>
-<ul>
-<li>Advanced visualization tools</li>
-<li>Lab IIa: Integrating advanced visualizations.</li>
-<li>Getting ready your app for distribution.</li>
-</ul></li>
-</ul>
-</div>
-<div id="other-links" class="section level1">
-<h1>Other links:</h1>
-<p>Other usefull information will be added here as we advance trough the workshop. This material will be often referenced during the sessions.</p>
-<ul>
-<li><a href="https://www.r-graph-gallery.com">R graph gallery</a>, Examples of different types of plots in R.<br />
-</li>
-<li><a href="https://epsg.io">EPSG</a>, Database of coordinate reference systems.<br />
-</li>
-<li><a href="https://shiny.rstudio.com/gallery/">Shiny gallery</a>. Examples of shiny apps.<br />
-<!-- - [Shiny widget gallery](https://shiny.rstudio.com/gallery/widget-gallery.html) --> <!-- - [Shiny tags glossary](https://shiny.rstudio.com/articles/tag-glossary.html), Differentes shiny tags que puedes usar para tu interfaz de usuario.   --> <!-- - [Pagina de documentacion de la libreria plotly](https://plotly.com/r/) --> <!-- - [Documentacion de ShinyDash](https://rstudio.github.io/shinydashboard/structure.html) --> <!-- - [Shiny cheatsheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf) --> <!-- - [Otras paqueterias para graficos interactivos](https://www.htmlwidgets.org/showcase_leaflet.html) --></li>
-</ul>
-<!-- Algunas fuentes de datos para el proyecto -->
-<!--   - https://www.kaggle.com/datasets -->
-<!--   - http://www.mgc.ac.cn/cgi-bin/DBatVir/main.cgi?func=map -->
-<!--   - https://wahis.oie.int/#/home -->
-<!--   - https://datos.cdmx.gob.mx -->
-<!--   - https://datamexico.org -->
-<!--   - https://www.inegi.org.mx/app/mapa/espacioydatos/ -->
 </div>
 
 

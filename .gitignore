@@ -2,5 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-ShinyWorkshop.Rproj
+
 .DS_Store
+misc

@@ -5,13 +5,20 @@ output:
     df_print: paged
 ---
 
+<!-- Send to Rick: -->
 
-<!-- # Informacion general -->
+<!--   - [x] *A short bio about yourself*  -->
 
-<!-- La visualización de datos forma parte escencial de la comunicación en la ciencia. Con los avances tecnológicos en la recolección y disponibilidad de la información, las bases de datos son cada vez más complejas en cuanto a su estructura. Las herramientas tradicionales de visualización de datos estática han sido efectivas para la comunicación de resultados en la ciencia, pero presentan algunas limitaciones al presentar  análisis de bases de datos con estructuras jerárquicas espacio-temporales. Herramientas que permiten la interacción con el usuario son cada vez más comunes para ser usadas para la exploración y análisis de datos. El software estadístico R ha sido adoptado por analistas de datos e investigadores en diferentes áreas del conocimiento incluyendo, salud pública y epidemiología. En este curso se discutirán algunos conceptos en estrategias para el desarrollo de aplicaciones web que pueden ser usadas para explorar y presentar resultados con bases de datos complejas. Por medio de laboratorios prácticos, los instructores guían a los participantes para desarrollar sus propias aplicaciones y las puedan desplegar en servidores web con el objetivo de comunicar los resultados de análisis de la información. -->
+<!--   - [x] *Learning objectives for the class ("By completing this workshop you will be able to......")* -->
+<!--   In this workshop you will learn the basics of developing your own interactive dashboard for geospatial visualization using R and shiny. We will cover diffferent topics such as: static and interactive maps, other non-spatial visualizations, strategies to make the app more efficient, how to publish your dashboard online. The goal is that by the end of the workshop each student feel comfortable on the development of interactive dahsboards.  -->
+<!--   - [x] *What software students will need (and installation links)* -->
+<!--   We will be using R and Rstudio. To publish your app online you will also need an account of shiny -->
+<!--   - [x] *What prerequisite skills (if any) students will need* -->
+<!--   Previous knowledge of R programing and geospatial data is helpful, but not mandatory. -->
+<!--   - [ ] *What you will cover on Sept. 27 for the optional session* -->
+<!--   Th first session will go over the pre-workshop materials  -->
 
-
- ------------
+<!--  ------------ -->
 
 
 # Objectives:
@@ -23,7 +30,7 @@ The objective of this workshop is to familiarize with the development of web app
   - Strategies to make your app more efficient 
   - Upload your application to a server so it can be shared and distributed. 
 
-Previous knowledge with geospatial data and R programming is desired, but not mandatory. Pre workshop materials covering the basics of R and geospatial data will be provided a few days before the workshop.
+Previous knowledge with geospatial data and R helpful is desired, but not mandatory. Pre workshop materials covering the basics of R and geospatial data will be provided a few days before the workshop.
 
 
  ------------
@@ -43,6 +50,16 @@ Participants must have a basic understanding with R and spatial data. Pre-worksh
 
 
  ------------
+ 
+# Pre workshop materials
+
+It is highly encouraged, that the participants have a look at the pre workshop material before the start of of the workshop. The pre-workshop materials consist on 3 labs that cover the basics of R and spatial data manipulation. The *day 0* will consist on office hours to assist the participants with any problems or questions regarding the pre-workshop materials, It is expected that the participants will have already the software installed and ready to go since day 01 of the workshop.  
+You can access the pre-workshop materials in the following links:  
+  
+  - [Software installation](0a_Intro_req.html)  
+  - [Intro to R](0b_Intro_to_R.html)  
+  - [Intro to Spatial data](0c_Spatial_intro.html)
+  
  
 # Workshop schedule
 
@@ -71,16 +88,6 @@ Participants must have a basic understanding with R and spatial data. Pre-worksh
     - Lab IIa: Integrating advanced visualizations.
     - Getting ready your app for distribution.
  
- 
-# Pre workshop materials
-
-It is highly encouraged, that the participants have a look at the pre workshop material before the start of of the workshop. The pre-workshop materials consist on 3 labs that cover the basics of R and spatial data manipulation. The *day 0* will consist on office hours to assit the participants with any problems or questions regarding the pre-workshop materials, It is expected that the participants will have already the software installed and ready to go since day 01 of the workshop.  
-You can access the pre-workshop materials in the following links:  
-  
-  - [Software installation](0a_Intro_req.html)  
-  - [Intro to R](0b_Intro_to_R.html)  
-  - [Intro to Spatial data](0c_Spatial_intro.html)
-  
 
 # Other links:
 Other usefull information will be added here as we advance trough the workshop. This material will be often referenced during the sessions.  
