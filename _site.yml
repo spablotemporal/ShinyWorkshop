@@ -16,7 +16,7 @@ navbar:
   - text: Pre Workshop 
     menu:
     - text: Prerequsites
-      href: '0a_Intro_req.html'
+      href: '0a_R_Intro.html'
     - text: Intro to R
       href: '0b_Intro_to_R.html'
     - text: Intro to Spatial data

@@ -10,7 +10,7 @@ output:
 <!--   - [x] *A short bio about yourself*  -->
 
 <!--   - [x] *Learning objectives for the class ("By completing this workshop you will be able to......")* -->
-<!--   In this workshop you will learn the basics of developing your own interactive dashboard for geospatial visualization using R and shiny. We will cover diffferent topics such as: static and interactive maps, other non-spatial visualizations, strategies to make the app more efficient, how to publish your dashboard online. The goal is that by the end of the workshop each student feel comfortable on the development of interactive dahsboards.  -->
+<!--   In this workshop you will learn the basics of developing your own interactive dashboard for geospatial visualization using R and shiny. We will cover different topics such as: static and interactive maps, other non-spatial visualizations, strategies to make the app more efficient, how to publish your dashboard online. The goal is that by the end of the workshop each student feel comfortable on the development of interactive dahsboards.  -->
 <!--   - [x] *What software students will need (and installation links)* -->
 <!--   We will be using R and Rstudio. To publish your app online you will also need an account of shiny -->
 <!--   - [x] *What prerequisite skills (if any) students will need* -->
