@@ -69,9 +69,9 @@ You can access the pre-workshop materials in the following links:
 
 <!-- La idea de los laboratorios es que se expliquen por si mismos, por si los quieren revisar mas adelante. EN este curso introduciremos los laboratorios dando una breve explicacion, a la mitad del tiempo haremos una encuesta para ver el avance y revisar dudas, y los ultimos 5 minutos hablaremos de las conclusiones para cada laboratorio -->
 
-   - **Day 00 (optional):** Installation of software and office hours.  
+  - **Day 00 (optional):** Installation of software and office hours.  
    
-   - **Day 01:** Getting started with Shiny.  
+  - **Day 01:** Getting started with Shiny.
     - Introduction  
     - Architecture and structure of the app  
     - Lab Ia: Creating your first app  
@@ -87,6 +87,10 @@ You can access the pre-workshop materials in the following links:
     - Advanced visualization tools
     - Lab IIa: Integrating advanced visualizations.
     - Getting ready your app for distribution.
+  - **Day 04:** Advanced reactivity and user interaction.
+    - Data collection
+    - Integration of cloud based databases
+    
  
 
 # Other links:
