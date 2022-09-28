@@ -83,7 +83,7 @@ ____________________________________________________________________
 R can import data in different formats. The most common are excel files (*.csv*, *.xls* y *.xlsx*), text files *.txt* and spatial data *.shp*, which we will talk about more in detail later.  
 To read *.xls*, *.xlsx* and *.shp* files we will need to install some libraries. To install a new library you need to be connected to the internet and use the function `install.packages()` to install the library. Once it has been installed, you can load the library using the function `library()`.  
   
-Download the excel file from this [link](https://ucdavis.box.com/s/sllst2fftrincdu273mhqe3yt1krwenu). It's not necessary to have a Box account.  
+Download the excel file from this [link](https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv). It's not necessary to have a Box account.  
   
 **Suggestion:** Sometimes when we want to use only one function from a library, we can just write the name of the library followed by the operator `::` and the name of the function, for example: `package::function()`. This way we won't have to load the whole library.  
 
@@ -388,6 +388,14 @@ ggarrange(plotlist = Figs, heights = c(2, 1))
 
 
 There are multiple types of plots and selecting the most appropriate for what we want to achieve is very important. [The R graph gallery](https://www.r-graph-gallery.com) is a great resource to see examples for different type of plots. 
+
+# Runing code from other files
+
+We can also reference other R files and run scripts we previously made. For example, here we will run a script that will install all the packages we will be using in this workshop. YOu can download the script from the shared folder or [this link](https://ucdavis.app.box.com/file/1026459820815?s=1fh79mfpq63aalw18t9uqhndupllaknb)
+
+```{r eval=FALSE}
+source('../pkgs.R') # Make sure you have the correct path in your system
+```
 
 ------------------
 

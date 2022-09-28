@@ -443,7 +443,7 @@ F1(name = &quot;Pablo&quot;)</code></pre>
 <h1><span class="header-section-number">2</span> Importing data into R</h1>
 <p>R can import data in different formats. The most common are excel files (<em>.csv</em>, <em>.xls</em> y <em>.xlsx</em>), text files <em>.txt</em> and spatial data <em>.shp</em>, which we will talk about more in detail later.<br />
 To read <em>.xls</em>, <em>.xlsx</em> and <em>.shp</em> files we will need to install some libraries. To install a new library you need to be connected to the internet and use the function <code>install.packages()</code> to install the library. Once it has been installed, you can load the library using the function <code>library()</code>.</p>
-<p>Download the excel file from this <a href="https://ucdavis.box.com/s/sllst2fftrincdu273mhqe3yt1krwenu">link</a>. It’s not necessary to have a Box account.</p>
+<p>Download the excel file from this <a href="https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv">link</a>. It’s not necessary to have a Box account.</p>
 <p><strong>Suggestion:</strong> Sometimes when we want to use only one function from a library, we can just write the name of the library followed by the operator <code>::</code> and the name of the function, for example: <code>package::function()</code>. This way we won’t have to load the whole library.</p>
 <pre class="r"><code># If we dont have the library installed, we use:
 # install.packages(&quot;readxl&quot;)
@@ -781,6 +781,12 @@ library(ggpubr)
 ggarrange(plotlist = Figs, heights = c(2, 1))</code></pre>
 <p><img src="0b_Intro_to_R_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>There are multiple types of plots and selecting the most appropriate for what we want to achieve is very important. <a href="https://www.r-graph-gallery.com">The R graph gallery</a> is a great resource to see examples for different type of plots.</p>
+</div>
+</div>
+<div id="runing-code-from-other-files" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Runing code from other files</h1>
+<p>We can also reference other R files and run scripts we previously made. For example, here we will run a script that will install all the packages we will be using in this workshop. YOu can download the script from the shared folder or <a href="https://ucdavis.app.box.com/file/1026459820815?s=1fh79mfpq63aalw18t9uqhndupllaknb">this link</a></p>
+<pre class="r"><code>source(&#39;../pkgs.R&#39;) # Make sure you have the correct path in your system</code></pre>
 <hr />
 <p><a href="index.html">Go Back</a></p>
 <pre class="r"><code># Create an adjacency matrix: 
@@ -807,8 +813,7 @@ library(circlize)</code></pre>
 ## ========================================</code></pre>
 <pre class="r"><code># Make the circular plot
 chordDiagram(data, transparency = 0.5)</code></pre>
-<p><img src="0b_Intro_to_R_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
-</div>
+<p><img src="0b_Intro_to_R_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 </div>
 
 
