@@ -1,5 +1,5 @@
 ---
-title: "Your first App"
+title: "Lab Ia: Your first App"
 output:
   html_document:
     toc: true

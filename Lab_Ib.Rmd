@@ -1,0 +1,149 @@
+---
+title: "Lab Ib: Inputs and Outputs"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(message = F, warning = F)
+```
+
+# Introduction
+
+In this lab we will start a shiny app from scratch and develop it to generate a few interactive figures.  
+
+Objectives:
+
+  - Load our own data into the app.  
+  - Generate Inputs and Outputs.  
+  - Create interactive visualizations.  
+  
+-----------------------
+
+We will start loading some libraries we will be using:
+
+```{r Loading libraries, eval = F}
+# Load the ibraries
+library(shiny)
+library(dplyr) # For data manipulation
+library(ggplot2) # For creating the figures
+```
+
+The data we will be using is contained in the STNet library, you can access to the data using::
+
+```{r Loading the data}
+# Make sure you have installed the most recent verison of STNet:
+# devtools::install_github('jpablo91/STNet')
+library(STNet) # Load the library 
+data("vac") # get the data
+```
+
+If you have a look in your environment, you will see that the dataset is available there now, you can get examine the first observations:
+
+```{r examining the data}
+head(vac)
+```
+
+  
+The library `shiny` provides several functions to create our app. The main function is `shinyApp`, which will ask for two arguments: `ui` and `server`. In this lab we will create two objects that contains all the necessary to be used as arguments for the `shinyApp()` function. 
+
+# User interface (UI)
+
+The user interface (UI) is where we will define the type of input and outputs that our app will have, as well as any relevant information for the user.  
+
+The inputs in shiny are defined with a function that will correspond to the type of information we want the user to provide. For example, if we want to introduce a categorical variable, we call use the function `selectInput()`; If we want a numeric variable, we can use `sliderInput()` or `numericInput()`. Since all the input functions in the shiny library contains the word *Input*, we can use the autocomplete function in R to search what options we have for different type of inputs:
+
+<img src="img/Ia_01-Inputs.GIF" style="width:60%" align="center">
+
+Similarly, the outputs in Shiny has to be specified according to the type of outputs we want to include. For example, there are different functions to specify if we want to output a plot (`plotOutput()`), a table(`tableOutput`), or other types we will see later.  
+
+```{r defining the UI, eval = F}
+# Define the UI
+ui <- fluidPage(
+  # Panel for the app title
+  titlePanel("Lab 1"),
+  # side panel 
+  sidebarPanel(
+    # Inputs for region
+    selectInput(inputId = "Mun", # Unique ID for our input
+                label = "Municipios:", # Label to describe the input
+                choices = unique(vac$NOM_MUN), # Define the choices
+                multiple = T, # allow selection of multiple choices
+                selected = unique(vac$NOM_MUN)) # Initial selection
+  ),
+  # Output panels
+  mainPanel(
+    plotOutput("VacMun") # Time series figure
+  )
+)
+```
+
+
+# Server
+
+The server must include all the processes that our app will execute. 
+
+
+```{r Server, eval = F}
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+  # We will create a reactive object (listens to changes in the UI)
+  x <- reactive({
+    p <- vac %>% # This is our data
+      filter(NOM_MUN %in% input$Mun) # Filter the observations that matches the input
+  })
+  
+  # Then we will create out plot
+  output$VacMun <- renderPlot({
+    x() %>%  # This is our reactive object
+      group_by(YEAR) %>%  # We group by year
+      summarise(Vac = sum(VAC_BOV)) %>%  # get the sum of Vaccinated
+      ggplot(aes(x = YEAR, y=Vac)) + # Call ggplot2
+      geom_bar(position="dodge", stat="identity", fill = "deepskyblue4") + # add a bar layer
+      # add labels for our plot
+      labs(x = "Year", y = "Vaccine doses applied", 
+           title = "Application of rabies vaccine")
+  })
+}
+```
+
+
+# Running the app
+
+In the previous lab, we used the *Run App* button to start the app, what this button does is just send the code to the console, so we can manually run the app by just running the code.
+
+```{r, eval = F}
+# integrate the app components
+shinyApp(ui = ui, server = server)
+```
+  
+  
+What other types of plots we can make? what other inputs do you think we could integrate?
+
+```{r}
+# otras figuras
+```  
+  
+------------------------------
+
+
+# Excercise
+
+The STNet library contains 2 other datasets we will be using in thus workshop, to access them you can use:
+
+```{r}
+data("vigilancia")
+data("captura")
+```
+
+
+
+Examina las bases de datos e incorporalas en la aplicacion que hemos creado. Identifica que variables tienen en comun las bases de datos y con los mismos inputs que ya creamos, crea una figura para cada base de datos. 
+
+
+
+
+
