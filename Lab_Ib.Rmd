@@ -120,28 +120,19 @@ In the previous lab, we used the *Run App* button to start the app, what this bu
 shinyApp(ui = ui, server = server)
 ```
   
-  
-What other types of plots we can make? what other inputs do you think we could integrate?
-
-```{r}
-# otras figuras
-```  
-  
 ------------------------------
 
 
 # Excercise
 
-The STNet library contains 2 other datasets we will be using in thus workshop, to access them you can use:
+The STNet library contains 2 other data sets we will be using in thus workshop, to access them you can use:
 
 ```{r}
 data("vigilancia")
 data("captura")
 ```
 
-
-
-Examina las bases de datos e incorporalas en la aplicacion que hemos creado. Identifica que variables tienen en comun las bases de datos y con los mismos inputs que ya creamos, crea una figura para cada base de datos. 
+Examine one of the data sets and think what other types of plots we can make? what other inputs do you think we could integrate? we can discuss this in the group.
 
 
 
