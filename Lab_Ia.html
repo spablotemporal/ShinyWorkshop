@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Your first App</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="width: 30px;" src="img/logo-nb.png" /></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pre Workshop
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="0a_R_Intro.html">Prerequsites</a>
+    </li>
+    <li>
+      <a href="0b_Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="0c_Spatial_intro.html">Intro to Spatial data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Contact
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Instructors.html">
+        <span class="fa fa-users"></span>
+         
+        Instructor
+      </a>
+    </li>
+    <li>
+      <a href="https://cadms.vetmed.ucdavis.edu">
+        <span class="fa fa-server"></span>
+         
+        CADMS Website
+      </a>
+    </li>
+    <li>
+      <a href="mailto:jpgo@ucdavis.edu">
+        <span class="fa fa-envelope"></span>
+         
+        Email
+      </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Your first App</h1>
+
+</div>
+
+
+<!-- Ejercicio 1: Abrir un archivo de Shiny app en R studio (15 minutos) -->
+<p>In this exercise we will create our first shiny app.</p>
+<p>Objectives:</p>
+<ul>
+<li>Familiarize with Rstudio and Shiny</li>
+<li>identify basic components of a shiny app<br />
+</li>
+<li>How to run our app from R</li>
+</ul>
+<hr />
+<!-- # Interfaz de R studio -->
+<!-- Al iniciar R studio vamos a observar 4 secciones:   -->
+<!--   - (1) Seccion superior derecha, en esta seccion manipulamos nuestros archivos de texto que generalmente sirven para desarrollar scripts o documentos. -->
+<!--   - (2) Seccion inferior derecha, en esta seccion se encuentra la consola, la terminal y 'jobs'. estos tabs son en donde se envia el codigo (consola para comunicrse con R y terminal para comunicarse con tu computadora).   -->
+<!--   - (3) Seccion superior izquierda, en esta seccion encontraras tu environment (los objetos que has creado), el historial de comandos que has enviado a la consola y algunas otras herramientas para la organizacion del projecto.   -->
+<!--   - (4) Seccion inferior izquierda, en esta seccion encontraras un buscador de archivos, los graficos que hagas en R y otras opciones de ayuda.    -->
+<!-- <img src="img/I_a.png" style="width:100%" align="center"> -->
+<!-- ## Proyectos -->
+<!-- Rstudio es mas que un editor de codigo para R, Rstudio tambien puede ser usado para administrar tus proyectos. Esto tiene varias ventajas por que te ayuda a contener tu trabajo de manera organizada en un directorio con todos los archivos y objetos que crees en tu entorno (environment).   -->
+<!-- Cuando inicias Rstudio por primera vez, se inicia en un projecto vacio, para crear un proyecto haz click en el menu superior derecho de la opcion de los proyectos y selecciona *New Project...*   -->
+<!-- <img src="img/Ia_01-NewProj.png" style="width:50%" align="center"> -->
+<!-- Despues te dara la opcion de crear un nuevo proyecto en un nuevo directorio, en un directorio existente o control de version. Para hoy seleccionaremos la opcion de crear un nuevo proyecto en un nuevo directorio (*New directory*)   -->
+<!-- <img src="img/Ia_02-NewProj.png" style="width:30%" align="center"> -->
+<!-- Posteriormente seleccionamos la opcion de *New project*.   -->
+<!-- <img src="img/Ia_03-NewProj.png" style="width:30%" align="center"> -->
+<!-- Dale un nombre a tu directorio y selecciona la localizacion.   -->
+<!-- <img src="img/Ia_04-NewProj.png" style="width:30%" align="center"> -->
+<!-- Al crear el nuevo projecto, en la pestaña de archivos, veras que Rstudio creo los archivos relacionados a tu proyecto. La organizacion de tu proyecto es personal, pero a mi en lo general me gusta crear 3 carpetas (code, data, docs) y asi organizar mis archivos relacionados con el proyecto. -->
+<!-- <img src="img/Ia_05-NewProj.png" style="width:30%" align="center"> -->
+<div id="creating-your-first-app" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Creating your first app</h1>
+<p>There are multiple ways to create your first app, in general the shiny apps consist of 4 parts:</p>
+<ul>
+<li>Loading the libraries, data and functions.<br />
+</li>
+<li>User interface (UI).<br />
+</li>
+<li>Server.<br />
+</li>
+<li>Integrating the components <code>shinyApp()</code></li>
+</ul>
+<p>First we will make sure we have the shiny library installed.</p>
+<pre class="r"><code># Install shiny
+install.packages(&quot;shiny&quot;)</code></pre>
+<p>Once we have the library installed, we can start. To create your first web app, lets use the user interface of Rstudio. For this we will go to the menu for creating a new files, and select <em>Shiny Web App…</em> from the list</p>
+<p><img src="img/I_b.png" style="width:100%" align="center"></p>
+<p>Te aparecera una ventana con las opciones para nombrar tu aplicacion, seleccionar si sera un archivo (Single file) o multiples (Multiple files) y el directorio donde la queremos guardar.<br />
+Por el momento dejaremos seleccionado que sea un achivo simple, agregamos un nombre para la aplicacion y guardamos la aplicacion en el directorio de nuestro proyecto.</p>
+<p><img src="img/I_c.png" style="width:50%" align="center"></p>
+<p>Al guardar la aplicacion, veremos el archivo app.R donde se mostrara una plantilla de ejemplo con una aplicacion generica.</p>
+<p><img src="img/I_d.png" style="width:70%" align="center"></p>
+<p>Examinar shiny apps puede ser un poco dificil al principio, ya que constan de varios componentes anidados y es facil perderse entre tantos parentesis, es importante comentar lo mas que puedas para facilitar a otras personas (o tu yo del futuro) entender la aplicacion para poder modificarla. Otra recomendacion para facilitar la lectura de las aplicaciones shiny es activar la opcion de <em>Rainbow parenthesis</em> que se encuentra en el menu de <em>Code</em>.</p>
+<p><img src="img/Ia_06-Rainbow.png" style="width:70%" align="center"></p>
+<p>Para correr la shiny app, busca el boton de <em>Run App</em> en la parte superior derecha de la seccion del editor del codigo.</p>
+<p><img src="img/Ia_07-Run.png" style="width:70%" align="center"></p>
+<p>Mientras la aplicacion este corriendo, no podras usar la consola de R. Para terminar la aplicacion, puedes cerrar la ventana y automaticamente te regresara a Rstudio y veras que se habilita nuevamente la consola.</p>
+</div>
+<div id="examining-the-components" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Examining the components</h1>
+<p>Toma un tiempo para examinar los contenidos de la aplicacion, esta bien si aun no entiendes todas las funciones y argumentos que se usan en esta aplicacion. Trata de indentificar los dos componentes principales (ui y server) y hacer los siguienets cambios:</p>
+<ul>
+<li>Cambia el color de las barras del histograma.<br />
+</li>
+<li>Cambia el numero maximo de bins a 100.<br />
+</li>
+<li>Cambia el titulo de la figura.</li>
+</ul>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

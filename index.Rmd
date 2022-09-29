@@ -58,8 +58,8 @@ Passcode: Ek?toE*8) Installation of software and office hours.
    
   - **Day 01:** Getting started with Shiny.
     - Introduction  
-    - Architecture and structure of the app  
-    - Lab Ia: Creating your first app  
+    - [Basic components of a Shiny App](Ia_Components.html)
+    - [Lab Ia: Creating your first app](Lab_Ia.html)  
     - Inputs outputs and server  
     - Introduction to the data set we will be using  
     - Lab Ib: Inputs and Outputs  

@@ -1,0 +1,109 @@
+---
+title: "Your first App"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+<!-- Ejercicio 1: Abrir un archivo de Shiny app en R studio (15 minutos) -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = F, message = F)
+library(dplyr); library(ggplot2); library(ggpubr)
+```
+
+In this exercise we will create our first shiny app.
+
+Objectives:
+
+  - Familiarize with Rstudio and Shiny
+  - identify basic components of a shiny app  
+  - How to run our app from R  
+
+
+--------------------
+
+<!-- # Interfaz de R studio -->
+
+<!-- Al iniciar R studio vamos a observar 4 secciones:   -->
+
+<!--   - (1) Seccion superior derecha, en esta seccion manipulamos nuestros archivos de texto que generalmente sirven para desarrollar scripts o documentos. -->
+<!--   - (2) Seccion inferior derecha, en esta seccion se encuentra la consola, la terminal y 'jobs'. estos tabs son en donde se envia el codigo (consola para comunicrse con R y terminal para comunicarse con tu computadora).   -->
+<!--   - (3) Seccion superior izquierda, en esta seccion encontraras tu environment (los objetos que has creado), el historial de comandos que has enviado a la consola y algunas otras herramientas para la organizacion del projecto.   -->
+<!--   - (4) Seccion inferior izquierda, en esta seccion encontraras un buscador de archivos, los graficos que hagas en R y otras opciones de ayuda.    -->
+
+<!-- <img src="img/I_a.png" style="width:100%" align="center"> -->
+
+<!-- ## Proyectos -->
+
+<!-- Rstudio es mas que un editor de codigo para R, Rstudio tambien puede ser usado para administrar tus proyectos. Esto tiene varias ventajas por que te ayuda a contener tu trabajo de manera organizada en un directorio con todos los archivos y objetos que crees en tu entorno (environment).   -->
+<!-- Cuando inicias Rstudio por primera vez, se inicia en un projecto vacio, para crear un proyecto haz click en el menu superior derecho de la opcion de los proyectos y selecciona *New Project...*   -->
+
+<!-- <img src="img/Ia_01-NewProj.png" style="width:50%" align="center"> -->
+
+<!-- Despues te dara la opcion de crear un nuevo proyecto en un nuevo directorio, en un directorio existente o control de version. Para hoy seleccionaremos la opcion de crear un nuevo proyecto en un nuevo directorio (*New directory*)   -->
+
+<!-- <img src="img/Ia_02-NewProj.png" style="width:30%" align="center"> -->
+
+<!-- Posteriormente seleccionamos la opcion de *New project*.   -->
+
+<!-- <img src="img/Ia_03-NewProj.png" style="width:30%" align="center"> -->
+
+<!-- Dale un nombre a tu directorio y selecciona la localizacion.   -->
+
+<!-- <img src="img/Ia_04-NewProj.png" style="width:30%" align="center"> -->
+
+<!-- Al crear el nuevo projecto, en la pestaña de archivos, veras que Rstudio creo los archivos relacionados a tu proyecto. La organizacion de tu proyecto es personal, pero a mi en lo general me gusta crear 3 carpetas (code, data, docs) y asi organizar mis archivos relacionados con el proyecto. -->
+
+<!-- <img src="img/Ia_05-NewProj.png" style="width:30%" align="center"> -->
+
+
+# Creating your first app
+
+There are multiple ways to create your first app, in general the shiny apps consist of 4 parts:  
+  
+  - Loading the libraries, data and functions.  
+  - User interface (UI).  
+  - Server.  
+  - Integrating the components `shinyApp()`  
+  
+First we will make sure we have the shiny library installed.  
+
+```{r eval = F}
+# Install shiny
+install.packages("shiny")
+```
+
+Once we have the library installed, we can start. To create your first web app, lets use the user interface of Rstudio. For this we will go to the menu for creating a new files, and select *Shiny Web App...* from the list
+
+
+<img src="img/I_b.png" style="width:100%" align="center">
+  
+Te aparecera una ventana con las opciones para nombrar tu aplicacion, seleccionar si sera un archivo (Single file) o multiples (Multiple files) y el directorio donde la queremos guardar.  
+Por el momento dejaremos seleccionado que sea un achivo simple, agregamos un nombre para la aplicacion y guardamos la aplicacion en el directorio de nuestro proyecto.
+
+<img src="img/I_c.png" style="width:50%" align="center">
+
+Al guardar la aplicacion, veremos el archivo app.R donde se mostrara una plantilla de ejemplo con una aplicacion generica.  
+
+<img src="img/I_d.png" style="width:70%" align="center">
+
+Examinar shiny apps puede ser un poco dificil al principio, ya que constan de varios componentes anidados y es facil perderse entre tantos parentesis, es importante comentar lo mas que puedas para facilitar a otras personas (o tu yo del futuro) entender la aplicacion para poder modificarla. Otra recomendacion para facilitar la lectura de las aplicaciones shiny es activar la opcion de *Rainbow parenthesis* que se encuentra en el menu de *Code*.  
+
+<img src="img/Ia_06-Rainbow.png" style="width:70%" align="center">
+
+Para correr la shiny app, busca el boton de *Run App* en la parte superior derecha de la seccion del editor del codigo.  
+
+<img src="img/Ia_07-Run.png" style="width:70%" align="center">
+
+Mientras la aplicacion este corriendo, no podras usar la consola de R. Para terminar la aplicacion, puedes cerrar la ventana y automaticamente te regresara a Rstudio y veras que se habilita nuevamente la consola.
+
+# Examining the components
+
+Toma un tiempo para examinar los contenidos de la aplicacion, esta bien si aun no entiendes todas las funciones y argumentos que se usan en esta aplicacion. Trata de indentificar los dos componentes principales (ui y server) y hacer los siguienets cambios:  
+  
+  - Cambia el color de las barras del histograma.  
+  - Cambia el numero maximo de bins a 100.  
+  - Cambia el titulo de la figura.
+

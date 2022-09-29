@@ -1,0 +1,13 @@
+---
+title: 'Ia: Basic components of a Shiny App'
+output:
+  html_document:
+    df_print: paged
+---
+
+<object data="Slides/Ia.pdf" width="750px" height="750px">
+    <embed src="Slides/Ia.pdf">
+    </embed>
+</object>
+
+[Inicio](index.html)
