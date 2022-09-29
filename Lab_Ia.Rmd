@@ -80,30 +80,33 @@ Once we have the library installed, we can start. To create your first web app, 
 
 <img src="img/I_b.png" style="width:100%" align="center">
   
-Te aparecera una ventana con las opciones para nombrar tu aplicacion, seleccionar si sera un archivo (Single file) o multiples (Multiple files) y el directorio donde la queremos guardar.  
-Por el momento dejaremos seleccionado que sea un achivo simple, agregamos un nombre para la aplicacion y guardamos la aplicacion en el directorio de nuestro proyecto.
+You will see a window with the options to name your app, select if it will be single file or multiple files and the directory where you want to save it.  
+For now we will select to create a single file, we add the name for the app and save it in a directory from our project.  
 
 <img src="img/I_c.png" style="width:50%" align="center">
 
-Al guardar la aplicacion, veremos el archivo app.R donde se mostrara una plantilla de ejemplo con una aplicacion generica.  
+Once you save the app, you will see the file `app.R` in the source panel. This file contains an example with a generic app you can run.  
 
 <img src="img/I_d.png" style="width:70%" align="center">
 
-Examinar shiny apps puede ser un poco dificil al principio, ya que constan de varios componentes anidados y es facil perderse entre tantos parentesis, es importante comentar lo mas que puedas para facilitar a otras personas (o tu yo del futuro) entender la aplicacion para poder modificarla. Otra recomendacion para facilitar la lectura de las aplicaciones shiny es activar la opcion de *Rainbow parenthesis* que se encuentra en el menu de *Code*.  
+Identifying the components of the shiny apps can be a bit confusing at first, since there are many functions nested in other functions. It is important to comment as much as possible and leave spaces to make it easier to read the code for your collaborators or your future you. One thing can help with navigating all the parenthesis and nested functions is using the option *Rainbow parenthesis*, which you can find in the *Code* menu.  
 
 <img src="img/Ia_06-Rainbow.png" style="width:70%" align="center">
 
-Para correr la shiny app, busca el boton de *Run App* en la parte superior derecha de la seccion del editor del codigo.  
+*Rainbow parenthesis* will color code your parenthesis to help you identify the the start and end of sections.  
+
+## Runing the app
+To run the shiny app, look for the button *Run App* in the top right part of your code editor.  
 
 <img src="img/Ia_07-Run.png" style="width:70%" align="center">
 
-Mientras la aplicacion este corriendo, no podras usar la consola de R. Para terminar la aplicacion, puedes cerrar la ventana y automaticamente te regresara a Rstudio y veras que se habilita nuevamente la consola.
+While your Shiny app is active, you wont be able to use the R console. To terminate the app, you can close the window and you will automatically go back to Rstudio and see that the console becomes active again.  
 
 # Examining the components
 
-Toma un tiempo para examinar los contenidos de la aplicacion, esta bien si aun no entiendes todas las funciones y argumentos que se usan en esta aplicacion. Trata de indentificar los dos componentes principales (ui y server) y hacer los siguienets cambios:  
-  
-  - Cambia el color de las barras del histograma.  
-  - Cambia el numero maximo de bins a 100.  
-  - Cambia el titulo de la figura.
+Take some time to go trough the code and examine the app sections, it ok if you see functions and arguments that don't understand. Try to identify the casic components of the app and make the following changes:  
+
+  - Change the color of the histogram bars.  
+  - Change the max number of bins to 100.  
+  - Change the title of the plot.
 
