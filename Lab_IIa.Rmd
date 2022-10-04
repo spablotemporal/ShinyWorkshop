@@ -147,14 +147,14 @@ server <- function(input, output) {
   
   y <- reactive({
     p <- vigilancia %>% 
-      filter(NOM_MUN %in% input$Mun) %>%
-      filter(YEAR %in% input$year)# Filter the years
+      filter(NOM_MUN %in% input$Mun,
+             between(YEAR, input$year[1], right = input$year[2]))
   })
   
   z <- reactive({
     p <- captura %>%
-      filter(NOM_MUN %in% input$Mun) %>%
-      filter(YEAR %in% input$year)
+      filter(NOM_MUN %in% input$Mun,
+             between(YEAR, input$year[1], right = input$year[2]))
   })
   
   ## Outputs ---------
