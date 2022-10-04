@@ -10,4 +10,4 @@ output:
     </embed>
 </object>
 
-[Inicio](index.html)
+[Index](index.html)

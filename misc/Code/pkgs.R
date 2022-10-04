@@ -1,21 +1,21 @@
-# Este archivo contiene todos los paquetes necesarios para el curso de Visualización interactiva de bases de datos complejas mediante la plataforma Shiny
+# This file has all the packages we will be using during the workshop
 
-packages = c("shiny", # Libreria para hacer apps
-             'shinydashboard',
-             'ggplot2', # Para graficos
-             "dplyr", # Para manipular datos
-             'ggpubr', # Para hacer arreglos de graficas
-             "sf", # Para manipular objetos espaciales
-             "lubridate", # Para manipular fechas 
-             'stars',
-             'tmap',
-             'plotly', # Para graficos interactivos
-             'DT', # Para hacer tablas interactivas
-             'rsconnect', # Para authorizar la cuenta de shiny 
-             'tidygraph', # Para manipular redes
-             'devtools', # para instalar paquetes de github
-             'visNetwork' # para visualizacion de redes dinamicas
-             )
+packages = c("shiny", # library to make the apps
+             'shinydashboard',# Library for user interface functions
+             'ggplot2', # For plots
+             "dplyr", # For data manipulation
+             'ggpubr', # To make arrangements and other tools for visualization
+             "sf", # For spatial object manipulation
+             'raster', # For raster manipulation
+             "lubridate", # To manipulate dates
+             'plotly', # For interactive plots
+             'leaflet', # For interactive maps
+             'DT', # For interactive tables
+             'rsconnect', # To authorize shiny
+             'tidygraph', # For network data manipulation
+             'devtools', # To install packages from github
+             'visNetwork' # For interactive network visualization
+)
 
 ## Now load or install&load all
 package.check <- lapply(
@@ -28,6 +28,6 @@ package.check <- lapply(
   }
 )
 
-devtools::install_github("rstudio/d3heatmap") # para hacer heatmaps interactivos
-devtools::install_github("rstudio/httpuv") # para correr shiny en rstudio cloud
-devtools::install_github('jpablo91/STNet') # para acceder a los datos del curso
+devtools::install_github("rstudio/d3heatmap") # To make interactive heatmaps
+# devtools::install_github("rstudio/httpuv") # TO run shiny in Rstudio Cloud
+devtools::install_github('jpablo91/STNet') # To access some data used in the workshop

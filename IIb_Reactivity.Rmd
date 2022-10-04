@@ -1,0 +1,15 @@
+---
+title: 'IIb: Reactivity'
+output:
+  html_document:
+    df_print: paged
+---
+
+<object data="Slides/IIb.pdf" width="750px" height="750px">
+    <embed src="Slides/IIb.pdf">
+    </embed>
+</object>
+
+
+[Index](index.html)
+

@@ -63,7 +63,7 @@ Passcode: Ek?toE*8) Installation of software and office hours.
     - [Basic components of a Shiny App](Ia_Components.html)
     - [Lab Ia: Creating your first app](Lab_Ia.html)  
     - [Inputs outputs and server](Ib_InsOuts.html)  
-    - [Lab Ib: Inputs and Outputs](Lab_Ib.html)  
+    - [Lab Ib: Inputs and Outputs](Lab_Ib.html), [Checkpoint](https://ucdavis.box.com/s/zq7txay3smz96ra72hrl9brsq52v78lm)  
   - **Day 02:** Setting up your development environment
     - [Designing the user interface](IIa_ShinyDash.html)
     - [Lab IIa: Introduction to shinydashboard](Lab_IIa.html)

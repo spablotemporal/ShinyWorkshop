@@ -13,7 +13,7 @@
 
 <title>Interactive geospatial visualization dashboards with R and Shiny.</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -145,15 +145,11 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -400,7 +396,8 @@ App</a></li>
 </li>
 <li><a href="Ib_InsOuts.html">Inputs outputs and server</a><br />
 </li>
-<li><a href="Lab_Ib.html">Lab Ib: Inputs and Outputs</a><br />
+<li><a href="Lab_Ib.html">Lab Ib: Inputs and Outputs</a>, <a
+href="https://ucdavis.box.com/s/zq7txay3smz96ra72hrl9brsq52v78lm">Checkpoint</a><br />
 </li>
 </ul></li>
 <li><p><strong>Day 02:</strong> Setting up your development
