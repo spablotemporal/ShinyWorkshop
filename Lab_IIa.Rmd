@@ -1,0 +1,221 @@
+---
+title: "Lab IIa: Improving the UI "
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = F)
+```
+
+# Introduction
+
+In this lab we will introduce `shinydashboard`. We will keep working on the file that we previously created on [Lab-Ib](Lab_Ib.html). If you did not were able to finish the previous lab, you can download the checkpoint in [this link](https://ucdavis.box.com/s/gtr5c4qotr787htvessx4fwsjq3rl4f6). This lab focus on improving the user interface, we will not be working with the server in this lab.  
+
+## Objective:  
+
+The objectives for this lab are:  
+  
+  - Understand the basic components of a shinydashboard.
+  - Improve the user interface and organization of our app.
+
+------------------------------
+
+First, we will make sure that we have the libraries loaded:
+
+```{r loading libs}
+# Load the libraries
+library(shiny)
+library(dplyr) # For data manipulation
+library(ggplot2) # For figures
+library(STNet) # Where the data is
+library(shinydashboard) # To create the UI
+```
+
+Then we will make sure we have the data loaded. Make sure you have the most recent version of STNet, since the data is included in the library.  
+
+```{r load the data}
+# Load the data from STNet
+data("vac") # Data for vaccination
+data("vigilancia") # Data for surveillance
+data("captura") # Data for captures
+```
+
+# Defining the UI
+
+In the previous lab, we developed an app that included 3 data sets, 2 inputs and 4 figures. In this app, we will not add anything new in terms of the components, but we will work on our user interface to make it more appealing.  
+The `shinydashboard` library includes some functions to create our UI. The UI in `shinydashboard` consist in 3 components: header, sidebar and body. We will see each section next.
+
+## Header
+
+We can include things like logos and the title of our app in the header. Lets create the header of our app using the function `dashboardHeader()`  
+
+```{r define header}
+# Define interface
+# Header -----------
+header <- dashboardHeader(title = 'New app')
+```
+
+
+## Sidebar
+
+The sidebar menu allow us to organize multiple tabs for our app and some general information. To create the sidebar we use the function `dashboardSidebar()`. We can include some text in this function to describe our app. We can use the function `menuItem()` too add a new tab in the sidebar:
+
+```{r defining sidebar}
+# Sidebar -------------
+sidebar <- dashboardSidebar(
+  sidebarMenu(
+    'This is the sidebar of the app', # Some text
+    # First tab of our app
+    menuItem(text = "Main", # text to show in the UI
+             tabName = "tab1") # Name we will use as identifier
+    )
+  )
+```
+
+In this app we will use the id *'MainTab'* for our first tab and we want to label the tab as *'Main'* in the UI.  
+
+## Body
+
+This is the main part of our app. We will include here the inputs and outputs. We can use different elementts to arrange the body of our app. The dimentions of th body in shiny are 12x12, and by default most of the objects have a width of 6. We will be using the function `box()` that will just create a window within the body.
+
+```{r defining the body}
+# Body -----------
+body <- dashboardBody(
+  tabItems(
+    # Main tab
+    tabItem(tabName = 'tab1',
+            fluidRow( # Fluid row is to allow is to arrange the components in rows
+                     # Box for the inputs
+                     box(title = 'Inputs', width = 12,
+                         # Input for the location
+                         selectInput(inputId = "Mun", label = "Municipios:", 
+                                     choices = unique(vac$NOM_MUN), multiple = T, 
+                                     selected = unique(vac$NOM_MUN)),
+                         # Input for the year
+                         sliderInput(inputId = 'year', label = 'Año', 
+                                     min = min(as.numeric(vac$YEAR)), 
+                                     max = max(as.numeric(vac$YEAR)), 
+                                     value = range(vac$YEAR))
+                         ),
+                     # Box for the first output
+                     box(title = 'Vacunacion', width = 6,
+                         plotOutput("VacMun"), # Time series plot
+                         ),
+                     # Box for the second output
+                     box(title = 'Vacunacion boxplot', width = 6,
+                         plotOutput("VacBoxplot"), 
+                         ),
+                     # Box for third output
+                     box(title = 'Vigilancia', width = 6,
+                         plotOutput("VigMun"), 
+                         ),
+                     box(title = 'Captura', width = 6,
+                         plotOutput("CapMun"), 
+                         )
+                     )
+              )
+    )
+  )
+```
+
+## Integrate the components in th UI
+
+Now we just have to integrate all the components and save them in the object `ui`:
+
+```{r integrate ui}
+ui <- dashboardPage(header = header, sidebar = sidebar, body = body)
+```
+
+# Server
+
+Since this lab focuses on the UI, the rest of the app (server) will remain the same.
+
+```{r server}
+# Server -----------
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+  ## Reactive objects ------------
+  x <- reactive({
+    p <- vac %>% 
+      filter(NOM_MUN %in% input$Mun,
+             between(YEAR, input$year[1], right = input$year[2]))
+  })
+  
+  y <- reactive({
+    p <- vigilancia %>% 
+      filter(NOM_MUN %in% input$Mun) %>%
+      filter(YEAR %in% input$year)# Filter the years
+  })
+  
+  z <- reactive({
+    p <- captura %>%
+      filter(NOM_MUN %in% input$Mun) %>%
+      filter(YEAR %in% input$year)
+  })
+  
+  ## Outputs ---------
+  output$VacMun <- renderPlot({
+    x() %>% 
+      group_by(YEAR) %>% 
+      summarise(Vac = sum(VAC_BOV)) %>% 
+      ggplot(aes(x = YEAR, y=Vac)) +
+      geom_bar(position="dodge", stat="identity", fill = "deepskyblue4") +
+      labs(x = "Year", y = "Vaccine Doses",
+           title = "Rabies vaccines applied")
+  })
+  
+  output$VacBoxplot <- renderPlot({
+    x() %>% 
+      group_by(YEAR, NOM_MUN) %>% 
+      summarise(Hatos = sum(TOTAL_HATOS, na.rm = T),
+                Vacunados = sum(HATOS_VAC, na.rm = T)) %>% 
+      mutate(pVac = Vacunados/Hatos) %>% 
+      ggplot() +
+      geom_boxplot(aes(x = YEAR, y = pVac)) +
+      geom_jitter(aes(x = YEAR, y = pVac), width = 0.1)
+  })
+  
+  output$VigMun <- renderPlot({
+    y() %>%
+      group_by(YEAR, RESULTADO) %>%
+      summarise(N = n()) %>%
+      ggplot(aes(x = YEAR, y=N, fill=RESULTADO)) +
+      geom_bar(position="dodge", stat="identity")+
+      theme(legend.position = "top") +
+      labs(x = "Year", y = "Tests",
+           title = "Rabies surveillance")
+  })
+  
+  output$CapMun <- renderPlot({
+    z() %>%
+      group_by(YEAR) %>%
+      summarise(N = n()) %>%
+      ggplot(aes(x = YEAR, y=N)) +
+      geom_bar(position="dodge", stat="identity", fill = "red4") +
+      labs(x = "Year", y = "Bat captures",
+           title = "Bat population control")
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+# Exercise
+
+One way to organize our app would be to create a tab for each of the datasets used. We can move the inputs to the sidebar so we will have easy access to them regardless in which tab we the user is. 
+
+```{r}
+# Exercise
+```
+
+  
+Now try to create one tab for each of the data sets
+  
+  
+
+

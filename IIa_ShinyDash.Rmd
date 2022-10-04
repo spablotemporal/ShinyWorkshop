@@ -1,0 +1,14 @@
+---
+title: 'IIa: Shiny Dashboard'
+output:
+  html_document:
+    df_print: paged
+---
+
+<object data="Slides/IIa.pdf" width="750px" height="750px">
+    <embed src="Slides/IIa.pdf">
+    </embed>
+</object>
+
+
+[Inicio](index.html)

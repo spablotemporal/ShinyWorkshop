@@ -5,6 +5,9 @@ output:
     df_print: paged
 ---
 
+<!-- Spreadsheet of participants -->
+<!-- https://docs.google.com/spreadsheets/d/184S9FNeoSUVqSdlWB9_q-rvO6FbaNEr2Z0GyRGiadDo/edit#gid=1328193615 -->
+
 # Objectives:
 
 The objective of this workshop is to familiarize with the development of web apps using R and Shiny. Students will learn how to clean and process geospatial data with R to generate maps and other visualizations, and how to translate those into a interactive web dashboard that can be distributed and shared. By completing this workshop you will be able to:
@@ -62,8 +65,8 @@ Passcode: Ek?toE*8) Installation of software and office hours.
     - [Inputs outputs and server](Ib_InsOuts.html)  
     - [Lab Ib: Inputs and Outputs](Lab_Ib.html)  
   - **Day 02:** Setting up your development environment
-    - Designing the user interface
-    - Lab IIa: Introduction to shinydashboard
+    - [Designing the user interface](IIa_ShinyDash.html)
+    - [Lab IIa: Introduction to shinydashboard](Lab_IIa.html)
     - Implementing user interaction
     - Lab IIb: Reactivity  
   - **Day 03:** Advance graphics and publishing your shiny app

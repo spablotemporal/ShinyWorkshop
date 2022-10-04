@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lab IIa: Improving the UI</title>
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="width: 30px;" src="img/logo-nb.png" /></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pre Workshop
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="0a_R_Intro.html">Prerequsites</a>
+    </li>
+    <li>
+      <a href="0b_Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="0c_Spatial_intro.html">Intro to Spatial data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Contact
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Instructors.html">
+        <span class="fa fa-users"></span>
+         
+        Instructor
+      </a>
+    </li>
+    <li>
+      <a href="https://cadms.vetmed.ucdavis.edu">
+        <span class="fa fa-server"></span>
+         
+        CADMS Website
+      </a>
+    </li>
+    <li>
+      <a href="mailto:jpgo@ucdavis.edu">
+        <span class="fa fa-envelope"></span>
+         
+        Email
+      </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Lab IIa: Improving the UI</h1>
+
+</div>
+
+
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>In this lab we will introduce <code>shinydashboard</code>. We will
+keep working on the file that we previously created on <a
+href="Lab_Ib.html">Lab-Ib</a>. If you did not were able to finish the
+previous lab, you can download the checkpoint in <a
+href="https://ucdavis.box.com/s/gtr5c4qotr787htvessx4fwsjq3rl4f6">this
+link</a>. This lab focus on improving the user interface, we will not be
+working with the server in this lab.</p>
+<div id="objective" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Objective:</h2>
+<p>The objectives for this lab are:</p>
+<ul>
+<li>Understand the basic components of a shinydashboard.</li>
+<li>Improve the user interface and organization of our app.</li>
+</ul>
+<hr />
+<p>First, we will make sure that we have the libraries loaded:</p>
+<pre class="r"><code># Load the libraries
+library(shiny)
+library(dplyr) # For data manipulation
+library(ggplot2) # For figures
+library(STNet) # Where the data is
+library(shinydashboard) # To create the UI</code></pre>
+<p>Then we will make sure we have the data loaded. Make sure you have
+the most recent version of STNet, since the data is included in the
+library.</p>
+<pre class="r"><code># Load the data from STNet
+data(&quot;vac&quot;) # Data for vaccination
+data(&quot;vigilancia&quot;) # Data for surveillance
+data(&quot;captura&quot;) # Data for captures</code></pre>
+</div>
+</div>
+<div id="defining-the-ui" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Defining the UI</h1>
+<p>In the previous lab, we developed an app that included 3 data sets, 2
+inputs and 4 figures. In this app, we will not add anything new in terms
+of the components, but we will work on our user interface to make it
+more appealing.<br />
+The <code>shinydashboard</code> library includes some functions to
+create our UI. The UI in <code>shinydashboard</code> consist in 3
+components: header, sidebar and body. We will see each section next.</p>
+<div id="header" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Header</h2>
+<p>We can include things like logos and the title of our app in the
+header. Lets create the header of our app using the function
+<code>dashboardHeader()</code></p>
+<pre class="r"><code># Define interface
+# Header -----------
+header &lt;- dashboardHeader(title = &#39;New app&#39;)</code></pre>
+</div>
+<div id="sidebar" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Sidebar</h2>
+<p>The sidebar menu allow us to organize multiple tabs for our app and
+some general information. To create the sidebar we use the function
+<code>dashboardSidebar()</code>. We can include some text in this
+function to describe our app. We can use the function
+<code>menuItem()</code> too add a new tab in the sidebar:</p>
+<pre class="r"><code># Sidebar -------------
+sidebar &lt;- dashboardSidebar(
+  sidebarMenu(
+    &#39;This is the sidebar of the app&#39;, # Some text
+    # First tab of our app
+    menuItem(text = &quot;Main&quot;, # text to show in the UI
+             tabName = &quot;tab1&quot;) # Name we will use as identifier
+    )
+  )</code></pre>
+<p>In this app we will use the id <em>‘MainTab’</em> for our first tab
+and we want to label the tab as <em>‘Main’</em> in the UI.</p>
+</div>
+<div id="body" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Body</h2>
+<p>This is the main part of our app. We will include here the inputs and
+outputs. We can use different elementts to arrange the body of our app.
+The dimentions of th body in shiny are 12x12, and by default most of the
+objects have a width of 6. We will be using the function
+<code>box()</code> that will just create a window within the body.</p>
+<pre class="r"><code># Body -----------
+body &lt;- dashboardBody(
+  tabItems(
+    # Main tab
+    tabItem(tabName = &#39;tab1&#39;,
+            fluidRow( # Fluid row is to allow is to arrange the components in rows
+                     # Box for the inputs
+                     box(title = &#39;Inputs&#39;, width = 12,
+                         # Input for the location
+                         selectInput(inputId = &quot;Mun&quot;, label = &quot;Municipios:&quot;, 
+                                     choices = unique(vac$NOM_MUN), multiple = T, 
+                                     selected = unique(vac$NOM_MUN)),
+                         # Input for the year
+                         sliderInput(inputId = &#39;year&#39;, label = &#39;Año&#39;, 
+                                     min = min(as.numeric(vac$YEAR)), 
+                                     max = max(as.numeric(vac$YEAR)), 
+                                     value = range(vac$YEAR))
+                         ),
+                     # Box for the first output
+                     box(title = &#39;Vacunacion&#39;, width = 6,
+                         plotOutput(&quot;VacMun&quot;), # Time series plot
+                         ),
+                     # Box for the second output
+                     box(title = &#39;Vacunacion boxplot&#39;, width = 6,
+                         plotOutput(&quot;VacBoxplot&quot;), 
+                         ),
+                     # Box for third output
+                     box(title = &#39;Vigilancia&#39;, width = 6,
+                         plotOutput(&quot;VigMun&quot;), 
+                         ),
+                     box(title = &#39;Captura&#39;, width = 6,
+                         plotOutput(&quot;CapMun&quot;), 
+                         )
+                     )
+              )
+    )
+  )</code></pre>
+</div>
+<div id="integrate-the-components-in-th-ui" class="section level2"
+number="2.4">
+<h2><span class="header-section-number">2.4</span> Integrate the
+components in th UI</h2>
+<p>Now we just have to integrate all the components and save them in the
+object <code>ui</code>:</p>
+<pre class="r"><code>ui &lt;- dashboardPage(header = header, sidebar = sidebar, body = body)</code></pre>
+</div>
+</div>
+<div id="server" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Server</h1>
+<p>Since this lab focuses on the UI, the rest of the app (server) will
+remain the same.</p>
+<pre class="r"><code># Server -----------
+# Define server logic required to draw a histogram
+server &lt;- function(input, output) {
+  ## Reactive objects ------------
+  x &lt;- reactive({
+    p &lt;- vac %&gt;% 
+      filter(NOM_MUN %in% input$Mun,
+             between(YEAR, input$year[1], right = input$year[2]))
+  })
+  
+  y &lt;- reactive({
+    p &lt;- vigilancia %&gt;% 
+      filter(NOM_MUN %in% input$Mun) %&gt;%
+      filter(YEAR %in% input$year)# Filter the years
+  })
+  
+  z &lt;- reactive({
+    p &lt;- captura %&gt;%
+      filter(NOM_MUN %in% input$Mun) %&gt;%
+      filter(YEAR %in% input$year)
+  })
+  
+  ## Outputs ---------
+  output$VacMun &lt;- renderPlot({
+    x() %&gt;% 
+      group_by(YEAR) %&gt;% 
+      summarise(Vac = sum(VAC_BOV)) %&gt;% 
+      ggplot(aes(x = YEAR, y=Vac)) +
+      geom_bar(position=&quot;dodge&quot;, stat=&quot;identity&quot;, fill = &quot;deepskyblue4&quot;) +
+      labs(x = &quot;Year&quot;, y = &quot;Vaccine Doses&quot;,
+           title = &quot;Rabies vaccines applied&quot;)
+  })
+  
+  output$VacBoxplot &lt;- renderPlot({
+    x() %&gt;% 
+      group_by(YEAR, NOM_MUN) %&gt;% 
+      summarise(Hatos = sum(TOTAL_HATOS, na.rm = T),
+                Vacunados = sum(HATOS_VAC, na.rm = T)) %&gt;% 
+      mutate(pVac = Vacunados/Hatos) %&gt;% 
+      ggplot() +
+      geom_boxplot(aes(x = YEAR, y = pVac)) +
+      geom_jitter(aes(x = YEAR, y = pVac), width = 0.1)
+  })
+  
+  output$VigMun &lt;- renderPlot({
+    y() %&gt;%
+      group_by(YEAR, RESULTADO) %&gt;%
+      summarise(N = n()) %&gt;%
+      ggplot(aes(x = YEAR, y=N, fill=RESULTADO)) +
+      geom_bar(position=&quot;dodge&quot;, stat=&quot;identity&quot;)+
+      theme(legend.position = &quot;top&quot;) +
+      labs(x = &quot;Year&quot;, y = &quot;Tests&quot;,
+           title = &quot;Rabies surveillance&quot;)
+  })
+  
+  output$CapMun &lt;- renderPlot({
+    z() %&gt;%
+      group_by(YEAR) %&gt;%
+      summarise(N = n()) %&gt;%
+      ggplot(aes(x = YEAR, y=N)) +
+      geom_bar(position=&quot;dodge&quot;, stat=&quot;identity&quot;, fill = &quot;red4&quot;) +
+      labs(x = &quot;Year&quot;, y = &quot;Bat captures&quot;,
+           title = &quot;Bat population control&quot;)
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)</code></pre>
+</div>
+<div id="exercise" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Exercise</h1>
+<p>One way to organize our app would be to create a tab for each of the
+datasets used. We can move the inputs to the sidebar so we will have
+easy access to them regardless in which tab we the user is.</p>
+<pre class="r"><code># Exercise</code></pre>
+<p>Now try to create one tab for each of the data sets</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
