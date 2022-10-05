@@ -477,11 +477,11 @@ body &lt;- dashboardBody(
                      # Box for the inputs
                      box(title = &#39;Inputs&#39;, width = 12,
                          # Input for the location
-                         selectInput(inputId = &quot;Mun&quot;, label = &quot;Municipios:&quot;, 
+                         selectInput(inputId = &quot;Mun&quot;, label = &quot;Location:&quot;, 
                                      choices = unique(vac$NOM_MUN), multiple = T, 
                                      selected = unique(vac$NOM_MUN)),
                          # Input for the year
-                         sliderInput(inputId = &#39;year&#39;, label = &#39;Año&#39;, 
+                         sliderInput(inputId = &#39;year&#39;, label = &#39;Year&#39;, 
                                      min = min(as.numeric(vac$YEAR)), 
                                      max = max(as.numeric(vac$YEAR)), 
                                      value = range(vac$YEAR))

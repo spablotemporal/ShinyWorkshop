@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lab IIb: Reactivity</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"><img id="logo" style="width: 30px;" src="img/logo-nb.png" /></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pre Workshop
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="0a_R_Intro.html">Prerequsites</a>
+    </li>
+    <li>
+      <a href="0b_Intro_to_R.html">Intro to R</a>
+    </li>
+    <li>
+      <a href="0c_Spatial_intro.html">Intro to Spatial data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Contact
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Instructors.html">
+        <span class="fa fa-users"></span>
+         
+        Instructor
+      </a>
+    </li>
+    <li>
+      <a href="https://cadms.vetmed.ucdavis.edu">
+        <span class="fa fa-server"></span>
+         
+        CADMS Website
+      </a>
+    </li>
+    <li>
+      <a href="mailto:jpgo@ucdavis.edu">
+        <span class="fa fa-envelope"></span>
+         
+        Email
+      </a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Lab IIb: Reactivity</h1>
+
+</div>
+
+
+<div id="introduction" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction</h1>
+<p>Objective: In this lab we will focus on reactivity. We will work with
+messages and buttons to make our app more efficient.</p>
+<hr />
+<p>We will continue working in the app we created in previous labs. Now
+we will focus on improving the user interaction and tools to a better
+communication between the server and the UI.<br />
+In this lab we will introduce two new libraries: <code>sf</code>, for
+spatial data manipulation; and <code>plotly</code>, to make interactive
+figures.</p>
+<pre class="r"><code># Load the libraries
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(shinydashboard)
+library(STNet)
+library(sf) # to manipulate spatial objects
+library(plotly) # For interactive plots</code></pre>
+</div>
+<div id="maps" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Maps</h1>
+<p>We will introduce a new data set from the STNet library. This new
+data set is a shape file with the administrative units of Mexico. Since
+we are only using a small area, we will filter the data set to only
+include the ones from teh study area.</p>
+<pre class="r"><code># Load the data
+data(&quot;vac&quot;)
+data(&quot;vigilancia&quot;)
+data(&quot;captura&quot;)
+
+# Loading the spatial data from the package
+MxShp &lt;- st_read(system.file(&quot;data/MxShp.shp&quot;, package = &quot;STNet&quot;)) %&gt;% 
+  filter(CVE_ENT %in% c(&#39;15&#39;, &#39;12&#39;, &#39;16&#39;)) # Filter the data to use the states with codes: 15, 12 y 16</code></pre>
+<pre><code>## Reading layer `MxShp&#39; from data source 
+##   `C:\Users\jpablo91\AppData\Local\Programs\R\R-4.2.1\library\STNet\data\MxShp.shp&#39; 
+##   using driver `ESRI Shapefile&#39;
+## Simple feature collection with 2471 features and 6 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: 1058748 ymin: 319149.1 xmax: 4082958 ymax: 2349605
+## Projected CRS: MEXICO_ITRF_2008_LCC</code></pre>
+<p>Now we will project the locations from the captures. First we will
+transform our table of captures to a POINT simple features collection
+(spatial points) using the function <code>st_as_sf()</code>. For this
+function we specify the coordinate reference system (CRS) and the name
+of the columns that contains the latitude and longitude (or X and
+Y).<br />
+Then we use the function <code>st_transform()</code> to project our data
+in the same projection as the data set of locations.</p>
+<pre class="r"><code># Convert and project the data
+capturaSp &lt;- captura %&gt;% 
+  st_as_sf(crs = st_crs(4326), # Coordinate reference system
+           coords = c(&#39;LONG&#39;, &#39;LATITUD&#39;)) %&gt;%  # Name for columns with lat and lon
+  st_transform(crs = st_crs(MxShp)) # transform to the MxShp crs</code></pre>
+<div id="making-the-figure" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Making the
+figure</h2>
+<p>The data for the captures has the number of animals captures and the
+locations by year. We will make a map that includes the number of
+animals captured by year and in the background the municipalities of the
+region.</p>
+<pre class="r"><code>p &lt;- ggplot() + # we call ggplot
+      geom_sf(data = MxShp, fill = &#39;grey60&#39;, col = &#39;grey20&#39;) + # This will be our base map
+      geom_sf(data = capturaSp, aes(size = CAPTURADOS), alpha = 0.5, col = &#39;red4&#39;) + # We add the points
+      theme_void() # select a theme without the grid
+
+p</code></pre>
+<p><img src="Lab_IIb_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="incorporating-the-code-in-the-app." class="section level2"
+number="2.2">
+<h2><span class="header-section-number">2.2</span> Incorporating the
+code in the app.</h2>
+<div id="new-output-in-ui" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> New output in
+UI</h3>
+<p>We will now create a new box in the tab for the captures data:</p>
+<pre class="r"><code>tabItem(tabName = &#39;tab3&#39;, # Name we use for the tab
+        fluidRow(
+          column(width = 12, 
+                 # ... , # Here goes the code from the previous figure
+                 box(title = &#39;Capture locations&#39;, width = 6,
+                     plotOutput(&#39;CapturaMap&#39;)
+                     )
+                 )
+          )
+        )</code></pre>
+</div>
+<div id="modify-the-reactive-event" class="section level3"
+number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Modify the reactive
+event</h3>
+<p>We can use the same reactive event that we had previously on the bar
+plot making some modifications in the code. Previously we called the
+object <code>capturas</code> to do the filtering of the data in the
+reactive event <code>z()</code>, but now we can change the object
+<code>capturas</code> for our spatial object we just created
+<code>capturasSp</code> so we can use it to make both the map and the
+bar plot.</p>
+<p>Our new reactive object will look like this:</p>
+<pre class="r"><code>z &lt;- eventReactive(input$filter, {
+    p &lt;- capturaSp %&gt;% # This is the spatial points data we just defined before
+      filter(NOM_MUN %in% input$Mun,
+             between(YEAR, input$year[1], right = input$year[2])) # here we do the filtering
+  })</code></pre>
+</div>
+<div id="incorporating-the-figure-in-the-server" class="section level3"
+number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Incorporating the
+figure in the server</h3>
+<p>Now we will create our figure into a new output called
+‘CapturesMap’</p>
+<pre class="r"><code>output$CapturesMap &lt;- renderPlot({
+    ggplot() +
+      geom_sf(data = MxShp, fill = &#39;grey60&#39;, col = &#39;grey20&#39;) +
+      geom_sf(data = z(), aes(size = CAPTURADOS), alpha = 0.5, col = &#39;red4&#39;) +
+      theme_void()
+  })</code></pre>
+<p>We can run the app to see the changes.</p>
+</div>
+</div>
+</div>
+<div id="action-buttons" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Action buttons</h1>
+<p>The more figures and maps we add to the app, the more resource
+consuming will be. This is a good moment to talk about action buttons.
+Action buttons help us to control the reactive processes happening in
+the server so our app can be more efficient.<br />
+The action buttons are basically inputs, and we use the function
+<code>actionButton()</code> to create them. We will introduce this new
+input in our menu where we have the rest of the inputs.</p>
+<pre class="r"><code>sidebar &lt;- dashboardSidebar(
+  sidebarMenu(
+    # ..., Other elements of the sidebar ...
+    actionButton(inputId = &#39;filter&#39;, label = &#39;Filter data&#39;)
+    )
+  )</code></pre>
+<p>The action button will be <code>False</code> when not activated and
+will change to <code>True</code> when we click on it. We can use this to
+indicate our app when we want to run the reactive processing. For this
+we have to change the <code>reactive()</code> function for
+<code>eventReactive()</code>. This function will require an argument
+that specifies when to react to the inputs, so for this we will use the
+action button we just created.<br />
+Lets make those change in our reactive object <code>x()</code></p>
+<pre class="r"><code>x &lt;- eventReactive(input$filter, {
+    p &lt;- vac %&gt;%
+      filter(NOM_MUN %in% input$Mun,
+             between(YEAR, input$year[1], right = input$year[2])) 
+  })</code></pre>
+<div id="messages" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Messages</h2>
+<p>Another tool we can use to improve the user interaction are messages.
+For this we can use the reactive function <code>observeEvent()</code>.
+This function listens to different elements in our app and we can use it
+to show different messages. In this example, we will use it to indcate
+when the filtering of the data is completed.</p>
+<pre class="r"><code>observeEvent(x(), {
+    showModal(
+      modalDialog(&quot;Plots Updated&quot;, # Message we want to show
+                  easyClose = T) # Option to close the message by clicking anywhere outside the box
+      )
+  })</code></pre>
+</div>
+</div>
+<div id="interactive-plots." class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Interactive plots.</h1>
+<p>In this last part of the lab we will introduce to interactive plots
+wie the <code>plotly</code> library.<br />
+This library has its own syntax to make the graphics, but it also has a
+very convenient function to transform any <code>ggplot2</code> figure to
+an interactive version.<br />
+In the map we previously create, the points are a bit clustered and can
+be dificult to actually see whats happening, we will use the
+<code>ggplotly()</code> function to convert the figure we previously
+made into an interactive version of it. This will provide some tools for
+zooming and paning the figure.</p>
+<pre class="r"><code>ggplotly(p) # Function to convert our figure to an interactive version</code></pre>
+<p><img src="img/IIb_plotly.png" style="width:60%" align="center"></p>
+<p>We can integrate our new figure into the app modifying a little bit
+the code. This new output will be no longer of the type ‘plot’ so we
+will need to change the functions for specifying the type of output and
+rendering it.</p>
+<div id="modifying-the-output" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Modifying the
+output</h2>
+<p>Previously, we used <code>plotOutput()</code> to indicate that our
+output is a plot, now we will change it to <code>plotlyOutput()</code>
+to indicate that is an interactive plot from plotly.</p>
+<pre class="r"><code>tabItem(tabName = &#39;tab3&#39;,
+        fluidRow(
+          column(width = 12,
+                 # ... , # here is where tour code for the previous figure goes ...
+                 box(title = &#39;Locations of the captures&#39;, width = 6,
+                     plotlyOutput(&#39;CapturesMap&#39;)
+                     )
+                 )
+          )
+        )</code></pre>
+</div>
+<div id="modificando-el-render" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Modificando el
+render</h2>
+<p>Now we will change the function <code>renderPlot()</code> that we
+previously used for the fucntino <code>renderPlotly()</code> to indicate
+that we have a different type of output.<br />
+We will also convert our ggplot figure with the function
+<code>ggplotly()</code>.</p>
+<pre class="r"><code>output$CapturaMap &lt;- renderPlotly({
+    p &lt;- ggplot() +
+      geom_sf(data = MxShp, fill = &#39;grey60&#39;, col = &#39;grey20&#39;) +
+      geom_sf(data = z(), aes(size = CAPTURADOS), alpha = 0.5, col = &#39;red4&#39;) +
+      theme_void()
+    
+    ggplotly(p)
+  })</code></pre>
+</div>
+</div>
+<div id="exercise." class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Exercise.</h1>
+<p>Try using <code>ggplotyl()</code> to change the plots that we
+previously created into interactive plots.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
