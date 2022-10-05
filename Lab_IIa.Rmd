@@ -80,7 +80,7 @@ In this app we will use the id *'MainTab'* for our first tab and we want to labe
 
 ## Body
 
-This is the main part of our app. We will include here the inputs and outputs. We can use different elementts to arrange the body of our app. The dimentions of th body in shiny are 12x12, and by default most of the objects have a width of 6. We will be using the function `box()` that will just create a window within the body.
+This is the main part of our app. We will include here the inputs and outputs. We can use different elements to arrange the body of our app. The dimensions of th body in shiny are 12x12, and by default most of the objects have a width of 6. We will be using the function `box()` that will just create a window within the body.
 
 ```{r defining the body}
 # Body -----------
