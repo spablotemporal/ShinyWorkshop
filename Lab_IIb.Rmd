@@ -13,7 +13,8 @@ knitr::opts_chunk$set(eval = T, message = F, warning = F)
 
 # Introduction
 
-Objective:
+Objective:  
+
 In this lab we will focus on reactivity. We will work with messages and buttons to make our app more efficient.
 
 ------------------------------
@@ -205,9 +206,9 @@ tabItem(tabName = 'tab3',
         )
 ```
 
-## Modificando el render
+## Modifying the render
 
-Now we will change the function `renderPlot()` that we previously used for the fucntino `renderPlotly()` to indicate that we have  a different type of output.  
+Now we will change the function `renderPlot()` that we previously used for the function `renderPlotly()` to indicate that we have  a different type of output.  
 We will also convert our ggplot figure with the function `ggplotly()`.  
 
 ```{r}
