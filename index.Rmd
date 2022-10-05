@@ -59,15 +59,14 @@ You can access the pre-workshop materials in the following links:
   - [**Day 00 (optional):**](https://usfca.zoom.us/rec/share/5Un6Oub98DYyMb6PPzN__k8Q9BcjQp1a2gYJmyQN-8b8IHRocuQ0fKVVbOrT-pXU.Q7KngTt0KmHe_g73?startTime=1664324166000
 Passcode: Ek?toE*8) Installation of software and office hours.  
    
-  - [**Day 01:** Getting started with Shiny.](https://usfca.zoom.us/rec/share/vf6zv7JnZylbqPSf-_Qj_eXrpQPav-CfR2njGgiEWzJevarHiXJfcPFCsXKdbHU.2AGbW5QrZa7iBFB- 
-Passcode: @%m2RmF+)
+  - [**Day 01:** Getting started with Shiny.](https://usfca.zoom.us/rec/share/g2887xi8UxQlwMFWXCdCB45P44DwxFORifIMQ9vBinH49wmzFviWkCQ041llnq8.7CTPVU3gNNeX615Z)
     - [Basic components of a Shiny App](Ia_Components.html)
     - [Lab Ia: Creating your first app](Lab_Ia.html)  
     - [Inputs outputs and server](Ib_InsOuts.html)  
     - [Lab Ib: Inputs and Outputs](Lab_Ib.html), [Checkpoint](https://ucdavis.box.com/s/zq7txay3smz96ra72hrl9brsq52v78lm)  
-  - **Day 02:** Setting up your development environment
+  - [**Day 02:** Setting up your development environment]((https://usfca.zoom.us/rec/share/fjhmzl_ftjkwz4qySnyZmXHCE0vD5jtqIzLCudTUU6kA4lUVVuhhEFOSYNl0S4RF.mgmmIkPi3XYLap90))
     - [Designing the user interface](IIa_ShinyDash.html)
-    - [Lab IIa: Introduction to shinydashboard](Lab_IIa.html)
+    - [Lab IIa: Introduction to shinydashboard](Lab_IIa.html), [Checkpoint](https://ucdavis.box.com/s/zs78vmnjkbkv2b385ydj8p6bvhmkg4sp)
     - [Implementing user interaction](IIb_Reactivity.html)
     - [Lab IIb: Reactivity](Lab_IIb.html)  
   - **Day 03:** Advance graphics and publishing your shiny app
