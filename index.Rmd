@@ -71,7 +71,7 @@ Passcode: Ek?toE*8) Installation of software and office hours.
     - [Lab IIb: Reactivity](Lab_IIb.html)  
   - **Day 03:** Advance graphics and publishing your shiny app
     - Advanced visualization tools
-    - Lab III: Integrating advanced visualizations.
+    - [Lab III: Integrating advanced visualizations.](Lab_IIIa.html)
     - Getting ready your app for distribution.
   - **Day 04:** Advanced reactivity and user interaction.
     - Data collection

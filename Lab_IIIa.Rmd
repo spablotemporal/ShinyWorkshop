@@ -1,0 +1,248 @@
+---
+title: "Lab_IIIa: Advanced visualization tools"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(eval = T, message = F, warning = F)
+```
+
+# Introduction
+
+Objective:
+In this lab we will go over a couple of libraries to make interactive figures with R and then implement this in out shiny app.
+
+------------------------------
+
+First we load the libraries and data we will use. In previous labs we were projecting our spatial data, for this one we will use the EPSG84 coordinate reference system (lat/long).  
+
+```{r load libraries}
+# Load libraries
+library(dplyr)
+library(sf)
+library(STNet)
+
+# Load data
+data("vac") # Data for vaccination
+data("vigilancia") # Data for surveillance
+data("captura")
+
+# Loading the spatial data from the package
+MxShp <- st_read(system.file("data/MxShp.shp", package = "STNet")) %>% 
+  filter(CVE_ENT %in% c('15', '12', '16')) %>%  # Filter the data to use the states with codes: 15, 12 y 16
+  st_transform(crs = st_crs(4326)) # transform to lat/long
+```
+
+
+# DT
+
+## Basic table
+
+
+## Search
+
+## Download button
+
+# Leaflet
+
+Leaflet is an open source library for interactive maps implemented in R. The library allows you to use different type of objects such as simple features (sf format) or simple data.frames with lat/long columns. Lets make sure we have the library installed and then load it.
+
+```{r}
+# install.packages("leaflet") # If you havent, install the library
+library(leaflet)
+```
+
+
+## Point data
+
+The library is similar to `ggplot2` in the sense that we first use the function `leaflet()` to call an empty canvas and then we add layers of information.  
+Lets crate an empty map with the point data we previously used. Leaflet expects by default data in Lat Lon, so we will have to make some changes to our data, which was previously projected in another CRS.
+
+```{r point data}
+# Transform it to spatial points
+capturaSp <- captura %>% 
+  st_as_sf(coords = c('LONG', 'LATITUD'), crs = st_crs(4326)) 
+
+leaflet() %>% # create the empty map
+  addMarkers(data = capturaSp) # put the first layer
+```
+
+
+Now we have an empty canvas with some markers. We could add a base shapefile to have a better sense of the space, but leaflet also provides some base maps for us to use, lets add one.
+
+
+## Basemaps
+
+We will use a base map from open street maps. If you want to explore other layers, you can start by typing `providers$` and use the auto complete function in R to select other base maps.
+
+```{r}
+leaflet() %>% 
+  addProviderTiles(providers$OpenStreetMap) %>% 
+  addMarkers(data = capturaSp) # put the first layer
+```
+
+There is also this website: [Providers demo](https://leaflet-extras.github.io/leaflet-providers/preview/), that shows in real time some of the available provides for baes maps in leaflet. 
+
+
+## Polygons
+
+We can also use polygon data with leaflet. We will first aggregate all the point layer information into a polygon data. To do this we will join the points with the polygon and then summarise the number of captures by polygon.
+
+```{r}
+# Agregate points per polygon
+x <- MxShp %>% # This is the polygon data
+  st_join(capturaSp['CAPTURADOS']) %>% # We spatial join it with the points
+  data.frame() %>% # Convert it to a data.frame
+  group_by(CVEGEO) %>% # Grouop by the admin ID
+  summarise(CAPTURADOS = sum(CAPTURADOS, na.rm = T)) # Sum all the captures
+
+# Join the information with the polygon data
+MxShp <- MxShp %>%
+  left_join(x)
+
+
+leaflet() %>%
+  addProviderTiles(providers$OpenStreetMap) %>%
+  addPolygons(data = MxShp, fillColor = ~CAPTURADOS) 
+```
+
+# Improving the visuals
+
+So we created some maps, but we can do better than that and use more of leaflet to make a prettier map.
+
+## Labels and popups
+
+We can add text and different attributes to our markers using labels and popups. Labels will show when we hover over our point, and popups will show when we click on them. YOu can use both in the same map, labels are meant to show short text and popups to show longer text.
+  
+Lets create a label for our markers:  
+```{r labels}
+ # Creating a label
+leaflet() %>% 
+  addProviderTiles(providers$OpenStreetMap) %>% 
+  addMarkers(
+    data = capturaSp, # This is the data
+    label = ~NOM_LOC # The variable we are using for the label
+    )
+```
+
+  
+Now lets create a popup for our map.  
+
+```{r}
+# Creating a popup
+leaflet() %>% 
+  addProviderTiles(providers$OpenStreetMap) %>% 
+  addMarkers(
+    data = capturaSp,
+    # We can format the popup using some html tags
+    popup = ~paste('Name:', NOM_LOC, 
+                   "<br>Captures:", CAPTURADOS) # The variable we are using for the label
+    )
+```
+
+
+
+## Creating clusters
+
+Leaflet has a very convenient feature that allows you to create clusters with the point data. This clusters count the number of markers in an area and change when you zoom or click into the clusters
+
+```{r}
+leaflet() %>% 
+  addProviderTiles(providers$OpenStreetMap) %>% 
+  addMarkers(data = capturaSp, clusterOptions = markerClusterOptions()) # put the first layer
+```
+
+## Changing the icon
+
+We can also change the icons for our markers. In the following example we will get an image from internet to use it as a marker:
+
+```{r}
+# This is the url for the figure:
+iu <- 'https://cdn140.picsart.com/239825197004212.png?to=crop&r=1008x948&q=85'
+# Now we make an icon with the url
+ic <- makeIcon(iconUrl = iu, iconHeight = 40, iconWidth = 40)
+
+leaflet() %>% 
+  addProviderTiles(providers$OpenStreetMap) %>% 
+  addMarkers(
+    data = capturaSp, 
+    popup = ~paste('Name:', NOM_LOC, 
+                   "<br>Captures:", CAPTURADOS),
+    icon = ic
+    )
+```
+
+## Using other markers
+
+```{r}
+leaflet() %>% 
+  addProviderTiles(providers$OpenStreetMap) %>% 
+  addCircleMarkers(data = capturaSp, 
+                   stroke = F,
+                   radius = ~CAPTURADOS,
+    popup = ~paste('Name:', NOM_LOC, 
+                   "<br>Captures:", CAPTURADOS))
+```
+
+
+
+
+
+
+```{r}
+# Create a continuous palette function
+pal <- colorNumeric(
+  palette = "Blues",
+  domain = MxShp$CAPTURADOS)
+
+
+leaflet() %>%
+  addProviderTiles(providers$OpenStreetMap) %>%
+  addPolygons(data = MxShp,
+              weight = 1, fillColor = ~CAPTURADOS,
+              label = ~CAPTURADOS) 
+```
+
+
+
+
+```{r}
+# p <- ggplot() + # we call ggplot
+#       geom_sf(data = MxShp, fill = 'grey60', col = 'grey20') + # This will be our base map
+#       geom_sf(data = capturaSp, aes(size = CAPTURADOS), alpha = 0.5, col = 'red4') + # We add the points
+#       theme_void() # select a theme without the grid
+# 
+# p
+```
+
+
+```{r}
+# leaflet(data = data) %>%
+#   addProviderTiles(providers$Stamen.Watercolor, 
+#                    options = providerTileOptions(maxZoom = 16)
+#                    ) %>%
+#       addProviderTiles(providers$Stamen.TonerLabels, group="No Labels",
+#                        options = providerTileOptions(maxZoom = 16)
+#                    ) %>%
+#   setView(lat = mean(data$lat, na.rm = T), lng = mean(data$lon, na.rm = T), zoom = 13) %>%
+#   addCircleMarkers(stroke = F, radius = 10, opacity = 1.0, color = 'black', ~lon, ~lat, label = ~contact_person, popup = ~contact)
+```
+
+
+
+
+
+
+
+
+
+
+
+# Implementation in Shiny
+
+# Connecting DT and leaflet
