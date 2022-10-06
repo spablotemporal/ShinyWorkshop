@@ -1,5 +1,5 @@
 ---
-title: "Lab_IIIa: Advanced visualization tools"
+title: "Lab IIIa: Advanced visualization tools"
 output:
   html_document:
     toc: true
@@ -41,12 +41,52 @@ MxShp <- st_read(system.file("data/MxShp.shp", package = "STNet")) %>%
 
 # DT
 
-## Basic table
+DT is a library to create tables with some nice features such as search, sort and export the data. Lets have a look at the default table that the function `datatable()` returns
 
+```{r}
+library(DT) # Load library
 
-## Search
+# Create a datatable
+captura %>% 
+  datatable()
+```
+
+We can be more specific with our tables 
+
+```{r}
+ # DT::datatable(data = d(),
+ #                  rownames = FALSE,
+ #                  extensions = 'Buttons',
+ #                  options = list(searching = FALSE, 
+ #                                 lengthChange = FALSE, 
+ #                                 pageLength = 5,
+ #                                 dom = "Blfrtip",
+ #                                 buttons = list("copy", 
+ #                                                list(extend = "collection",
+ #                                                     buttons = c("csv", "excel", "pdf"),
+ #                                                     text = "Download")))
+ # )
+```
+
 
 ## Download button
+
+```{r}
+captura %>% 
+  DT::datatable(
+    rownames = FALSE,
+    extensions = 'Buttons',
+    options = list(searching = FALSE,
+                   lengthChange = FALSE, 
+                   pageLength = 5,
+                   dom = "Blfrtip",
+                   buttons = list("copy",
+                                  list(extend = "collection",
+                                       buttons = c("csv", "excel", "pdf"),
+                                       text = "Download")))
+    )
+```
+
 
 # Leaflet
 
@@ -91,7 +131,7 @@ There is also this website: [Providers demo](https://leaflet-extras.github.io/le
 
 ## Polygons
 
-We can also use polygon data with leaflet. We will first aggregate all the point layer information into a polygon data. To do this we will join the points with the polygon and then summarise the number of captures by polygon.
+We can also use polygon data with leaflet. We will first aggregate all the point layer information into a polygon data. To do this we will join the points with the polygon and then summarise the number of captures by polygons to create a choropleth map.
 
 ```{r}
 # Agregate points per polygon
@@ -179,66 +219,38 @@ leaflet() %>%
 
 ## Using other markers
 
+We can use other type of representations for point data. Here we will use the function `addCircleMarker()` which will represent the point data with a circle.  
+
 ```{r}
 leaflet() %>% 
   addProviderTiles(providers$OpenStreetMap) %>% 
-  addCircleMarkers(data = capturaSp, 
-                   stroke = F,
-                   radius = ~CAPTURADOS,
+  addCircleMarkers(data = capturaSp, # This is the data set
+                   stroke = F, # Option to remove the outline of the circle
+                   radius = ~CAPTURADOS, # use the number of captures for the size
     popup = ~paste('Name:', NOM_LOC, 
                    "<br>Captures:", CAPTURADOS))
 ```
 
+## Improving our choropleth map
 
-
-
-
+There are multiple options for improving our polygon map. We can change the fill color, outline width, among others. To change the color scale we have to create a color palette based in our observations.
 
 ```{r}
-# Create a continuous palette function
+# Create a continuous palette 
 pal <- colorNumeric(
-  palette = "Blues",
+  palette = "Reds",
   domain = MxShp$CAPTURADOS)
 
 
 leaflet() %>%
   addProviderTiles(providers$OpenStreetMap) %>%
   addPolygons(data = MxShp,
-              weight = 1, fillColor = ~CAPTURADOS,
-              label = ~CAPTURADOS) 
+              color = 'black', 
+              weight = 1, fillColor = ~pal(CAPTURADOS),
+              label = ~NOMGEO,
+              popup = ~paste('Name:', NOMGEO, 
+                   "<br>Captures:", CAPTURADOS))
 ```
-
-
-
-
-```{r}
-# p <- ggplot() + # we call ggplot
-#       geom_sf(data = MxShp, fill = 'grey60', col = 'grey20') + # This will be our base map
-#       geom_sf(data = capturaSp, aes(size = CAPTURADOS), alpha = 0.5, col = 'red4') + # We add the points
-#       theme_void() # select a theme without the grid
-# 
-# p
-```
-
-
-```{r}
-# leaflet(data = data) %>%
-#   addProviderTiles(providers$Stamen.Watercolor, 
-#                    options = providerTileOptions(maxZoom = 16)
-#                    ) %>%
-#       addProviderTiles(providers$Stamen.TonerLabels, group="No Labels",
-#                        options = providerTileOptions(maxZoom = 16)
-#                    ) %>%
-#   setView(lat = mean(data$lat, na.rm = T), lng = mean(data$lon, na.rm = T), zoom = 13) %>%
-#   addCircleMarkers(stroke = F, radius = 10, opacity = 1.0, color = 'black', ~lon, ~lat, label = ~contact_person, popup = ~contact)
-```
-
-
-
-
-
-
-
 
 
 
