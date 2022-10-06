@@ -39,9 +39,9 @@ MxShp <- st_read(system.file("data/MxShp.shp", package = "STNet")) %>%
 ```
 
 
-# DT
+# Tables with DT
 
-DT is a library to create tables with some nice features such as search, sort and export the data. Lets have a look at the default table that the function `datatable()` returns
+[DT](https://rstudio.github.io/DT/) is a library to create tables with some nice features such as search, sort and export the data. Lets have a look at the default table that the function `datatable()` returns
 
 ```{r}
 library(DT) # Load library
@@ -51,46 +51,60 @@ captura %>%
   datatable()
 ```
 
-We can be more specific with our tables 
+We can be more specific with our tables, there are multiple arguments that we can specify to change how our table looks like
 
 ```{r}
- # DT::datatable(data = d(),
- #                  rownames = FALSE,
- #                  extensions = 'Buttons',
- #                  options = list(searching = FALSE, 
- #                                 lengthChange = FALSE, 
- #                                 pageLength = 5,
- #                                 dom = "Blfrtip",
- #                                 buttons = list("copy", 
- #                                                list(extend = "collection",
- #                                                     buttons = c("csv", "excel", "pdf"),
- #                                                     text = "Download")))
- # )
+captura %>% 
+  datatable(
+    rownames = F,
+    filter = 'top', # Add a filter at the top
+    options = list(
+      searching = F,# Remove the searchbar
+      pageLength = 5 # Change the max number of rows
+      )
+  )
+```
+
+## Changing column names
+
+```{r}
+captura %>% 
+  datatable(
+    rownames = F,
+    options = list(
+      searching = F,# Remove the searchbar
+      pageLength = 5 # Change the max number of rows
+      ),
+    colnames = c('Municipality', 'Location', 'location 2', 'date', 'Year', 'Captures', 'Treated', 'Lat', 'Lon')
+  )
 ```
 
 
+
 ## Download button
+
+DT has a couple of extensions that introduce other functionality, one of them is to add a button to download the data. Lets have a look how to add this:
 
 ```{r}
 captura %>% 
   DT::datatable(
     rownames = FALSE,
     extensions = 'Buttons',
-    options = list(searching = FALSE,
-                   lengthChange = FALSE, 
-                   pageLength = 5,
-                   dom = "Blfrtip",
-                   buttons = list("copy",
-                                  list(extend = "collection",
-                                       buttons = c("csv", "excel", "pdf"),
-                                       text = "Download")))
+    options = list(
+      buttons = list("copy",
+                     list(extend = "collection",
+                          buttons = c("csv", "excel", "pdf"),
+                          text = "Download")))
     )
 ```
 
 
-# Leaflet
+There are other extensions you can explore in [this link](https://rstudio.github.io/DT/extensions.html)
 
-Leaflet is an open source library for interactive maps implemented in R. The library allows you to use different type of objects such as simple features (sf format) or simple data.frames with lat/long columns. Lets make sure we have the library installed and then load it.
+
+# Maps with Leaflet
+
+[Leaflet](https://rstudio.github.io/leaflet/) is an open source library for interactive maps implemented in R. The library allows you to use different type of objects such as simple features (sf format) or simple data.frames with lat/long columns. Lets make sure we have the library installed and then load it.
 
 ```{r}
 # install.packages("leaflet") # If you havent, install the library
@@ -255,6 +269,8 @@ leaflet() %>%
 
 
 
-# Implementation in Shiny
+# Exercise: Implementation in Shiny
 
-# Connecting DT and leaflet
+To add DT and Leaflet objects into our app, we just need to create the objects and make sure we use the correct Output and Render functions.   
+Lets try to add a map to the app we already have:
+
