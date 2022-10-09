@@ -1,0 +1,16 @@
+---
+title: "Lab IIIb: Getting ready for distribution"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+# Introduction.
+
+Objectives:  
+
+In this lab we will get our app ready for distribution. We will first make sure our app runs in isolation and all the required dependencies are correctly located in the app folder. 
+
+

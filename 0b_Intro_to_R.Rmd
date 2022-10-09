@@ -394,7 +394,7 @@ There are multiple types of plots and selecting the most appropriate for what we
 We can also reference other R files and run scripts we previously made. For example, here we will run a script that will install all the packages we will be using in this workshop. YOu can download the script from the shared folder or [this link](https://ucdavis.app.box.com/file/1026459820815?s=1fh79mfpq63aalw18t9uqhndupllaknb)
 
 ```{r eval=FALSE}
-source('../pkgs.R') # Make sure you have the correct path in your system
+# source('misc/Code/pkgs.R') # Make sure you have the correct path in your system
 ```
 
 ------------------

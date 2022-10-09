@@ -54,10 +54,7 @@ You can access the pre-workshop materials in the following links:
 <!-- [Link del proyecto en Rstudio Cloud](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)   -->
 <!-- [Link for shared folder](https://ucdavis.box.com/s/v2wlgjm16bl8vo02ujd7hk5yduuulywi) -->
 
-<!-- La idea de los laboratorios es que se expliquen por si mismos, por si los quieren revisar mas adelante. EN este curso introduciremos los laboratorios dando una breve explicacion, a la mitad del tiempo haremos una encuesta para ver el avance y revisar dudas, y los ultimos 5 minutos hablaremos de las conclusiones para cada laboratorio -->
-
-  - [**Day 00 (optional):**](https://usfca.zoom.us/rec/share/5Un6Oub98DYyMb6PPzN__k8Q9BcjQp1a2gYJmyQN-8b8IHRocuQ0fKVVbOrT-pXU.Q7KngTt0KmHe_g73?startTime=1664324166000
-Passcode: Ek?toE*8) Installation of software and office hours.  
+  - [**Day 00 (optional):**](https://usfca.zoom.us/rec/share/5Un6Oub98DYyMb6PPzN__k8Q9BcjQp1a2gYJmyQN-8b8IHRocuQ0fKVVbOrT-pXU.Q7KngTt0KmHe_g73?startTime=1664324166000) Installation of software and office hours.  
    
   - [**Day 01:** Getting started with Shiny.](https://usfca.zoom.us/rec/share/g2887xi8UxQlwMFWXCdCB45P44DwxFORifIMQ9vBinH49wmzFviWkCQ041llnq8.7CTPVU3gNNeX615Z)
     - [Basic components of a Shiny App](Ia_Components.html)
@@ -69,7 +66,7 @@ Passcode: Ek?toE*8) Installation of software and office hours.
     - [Lab IIa: Introduction to shinydashboard](Lab_IIa.html), [Checkpoint](https://ucdavis.box.com/s/zs78vmnjkbkv2b385ydj8p6bvhmkg4sp)
     - [Implementing user interaction](IIb_Reactivity.html)
     - [Lab IIb: Reactivity](Lab_IIb.html), [Checkpoint](https://ucdavis.box.com/s/4z6p2s1gcpvrheqqqbrv59ctrz1fx7y3)  
-  - **Day 03:** Advance graphics and publishing your shiny app
+  - [**Day 03:** Advance graphics and publishing your shiny app](https://usfca.zoom.us/rec/share/RxexNVcBuemsGfaBnUiIJr4q3PPynrf42UrhZMSuhnn6tS-MQeJzB-eXNbpfMP_G.PwptN1ZAjZ276OJs)
     - Advanced visualization tools
     - [Lab III: Integrating advanced visualizations.](Lab_IIIa.html)
     - Getting ready your app for distribution.
@@ -81,7 +78,7 @@ Passcode: Ek?toE*8) Installation of software and office hours.
  
 
 # Other links:
-Other usefull information will be added here as we advance trough the workshop. This material will be often referenced during the sessions.  
+Other useful information will be added here as we advance trough the workshop. This material will be often referenced during the sessions.  
 
   - [Rstudio Cloud project](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)
   - [Shared folder](https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv), data used for preworkshop part 1 and code referenced in workshop
@@ -90,8 +87,8 @@ Other usefull information will be added here as we advance trough the workshop. 
   - [Shiny gallery](https://shiny.rstudio.com/gallery/). Examples of shiny apps.  
   - [Shiny widget gallery](https://shiny.rstudio.com/gallery/widget-gallery.html)
   - [Shiny tags glossary](https://shiny.rstudio.com/articles/tag-glossary.html).
-  <!-- - [Pagina de documentacion de la libreria plotly](https://plotly.com/r/) -->
-  <!-- - [Documentacion de ShinyDash](https://rstudio.github.io/shinydashboard/structure.html) -->
+  - [Plotly documentation](https://plotly.com/r/)
+  - [ShinyDashbiard documentation](https://rstudio.github.io/shinydashboard/structure.html)
   <!-- - [Shiny cheatsheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf) -->
   <!-- - [Otras paqueterias para graficos interactivos](https://www.htmlwidgets.org/showcase_leaflet.html) -->
   
