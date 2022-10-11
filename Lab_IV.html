@@ -400,25 +400,20 @@ services</h1>
 <h1><span class="header-section-number">1</span> Introduction.</h1>
 <p>Objectives:</p>
 </div>
-<div id="dynamic-ui" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Dynamic UI</h1>
-<p>We can add and remove sections of the UI based on different events in
-our app.</p>
-</div>
-<div id="integrating-google-sheets" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Integrating google
-sheets</h1>
+<div id="google-sheets" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Google sheets</h1>
 <p>We will use the packages <code>googledrive</code> and
 <code>googlesheets4</code> to save and load daa from google drive</p>
-<pre class="r"><code># Install the package if not installed
-library(dplyr)
-library(ggplot2)
+<pre class="r"><code>library(dplyr)
+# Install the package if not installed
 if(require(&#39;googledrive&#39;) == F){
  install.packages(&quot;googledrive&quot;) 
 }
 if(require(&#39;googlesheets4&#39;) == F){
  install.packages(&quot;googlesheets4&quot;) 
 }</code></pre>
+<div id="authentication" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Authentication</h2>
 <p>There are a couple of things we need to do to authorize R and our
 shiny app to use google sheets. First we will need to allow the session
 to catch the authentication information and then use the function
@@ -442,9 +437,10 @@ list.files(&quot;misc/Code/Checkpoints/IIIa/.secrets&quot;)</code></pre>
 <p>Once the authentication is complete, you should see a message like
 this in your web browser:</p>
 <p><img src="img/IV_AuthComplete.png" style="width:80%" align="center"></p>
+</div>
 <div id="reading-files-from-your-drive" class="section level2"
-number="3.1">
-<h2><span class="header-section-number">3.1</span> Reading files from
+number="2.2">
+<h2><span class="header-section-number">2.2</span> Reading files from
 your Drive</h2>
 <p>To read files from the drive, you will need the id of the file you
 want to access. We can search for files in the drive with the function
@@ -464,33 +460,116 @@ as argument we specify the id we want to read:</p>
 <pre class="r"><code># define the id for the file:
 Geolocations &lt;- &#39;1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY&#39;
 # Load data
-dGL &lt;- read_sheet(ss = Geolocations)</code></pre>
-<pre><code>## ! Using an auto-discovered, cached token.</code></pre>
-<pre><code>##   To suppress this message, modify your code or options to clearly consent to
-##   the use of a cached token.</code></pre>
-<pre><code>##   See gargle&#39;s &quot;Non-interactive auth&quot; vignette for more details:</code></pre>
-<pre><code>##   &lt;]8;;https://gargle.r-lib.org/articles/non-interactive-auth.htmlhttps://gargle.r-lib.org/articles/non-interactive-auth.html]8;;&gt;</code></pre>
-<pre><code>## ℹ The googlesheets4 package is using a cached token for &#39;]8;;mailto:jpgo@ucdavis.edujpgo@ucdavis.edu]8;;&#39;.</code></pre>
-<pre><code>## ✔ Reading from &quot;GeoLocations&quot;.</code></pre>
-<pre><code>## ✔ Range &#39;Sheet1&#39;.</code></pre>
-<pre class="r"><code>dGL</code></pre>
-<pre><code>## # A tibble: 4 × 3
-##   Name    Lat    Lon
-##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
-## 1 Loc1   18.6 -100. 
-## 2 Loc2   18.4 -101. 
-## 3 Loc3   19.1 -101. 
-## 4 Loc4   19.1  -99.2</code></pre>
+dGL &lt;- read_sheet(ss = Geolocations)
+
+dGL</code></pre>
+</div>
+<div id="writing-new-entries-to-the-data" class="section level2"
+number="2.3">
+<h2><span class="header-section-number">2.3</span> Writing new entries
+to the data</h2>
+<p>We can sue the function <code>sheet_apend()</code> to add new rows to
+our data. Lets create a data.frame that will be a single row, and then
+append this to the google sheet.</p>
+<pre class="r"><code>data.frame(
+  Name = &#39;Location x&#39;, # You can try to change the name to something else to see the one you appended
+  Lat = 18.38841,
+  Lon = -100.73483
+  ) %&gt;% 
+  sheet_append(ss = Geolocations)</code></pre>
+<p>If we go to our <a
+href="https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY">google
+sheet</a>, we will see the new observation we added.</p>
+<p>We can also make the changes directly in the google sheet, and the
+next time we load the data we will see the changes.</p>
+<p><img src="img/IV_GSheet.png" style="width:60%" align="center"></p>
+<p>Now that we know how to load and write data to google sheets, lets
+try to incorporate this in shiny.</p>
+</div>
+<div id="incorporating-in-shiny" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Incorporating in
+shiny</h2>
+<div id="changes-in-global.r" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Changes in
+global.R</h3>
+<p>It is important that the folder that contains your app has the file
+we created when authorizing the account, otherwise it will not work when
+you upload your app to a server, or run it in another session.<br />
+To tell shiny to use the correct auth file you have to add the following
+code to the global section of your app:</p>
+<pre class="r"><code># add the libraries we will sue:
+library(googledrive)
+library(googlesheets4)
+
+
+# Google drive set up
+options(
+  # whenever there is one account token found, use the cached token
+  gargle_oauth_email = TRUE,
+  # specify auth tokens should be stored in the hidden directory &quot;.secrets&quot;
+  gargle_oauth_cache = &quot;.secrets&quot;
+)
+# Specify the id for the file we will use
+Geolocations &lt;- &#39;1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY&#39;</code></pre>
+</div>
+<div id="changes-in-ui.r" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Changes in
+ui.R</h3>
+<p>Now lets create a few inputs so we can add new entries from our shiny
+app. We will add a new box to our third tab, this box will include the
+inputs for the columns we want to fill in our data for each row, and we
+will also create an action button to submit the information.</p>
+<pre class="r"><code>box(title = &#39;Add New Observation&#39;, # title of the new box
+    width = 12,
+    textInput(inputId = &#39;NameIn&#39;, label = &#39;Name&#39;), 
+    numericInput(inputId = &#39;LatIn&#39;, label = &#39;Latitude&#39;, value = 0),
+    numericInput(inputId = &#39;LonIn&#39;, label = &#39;Longitude&#39;, value = 0),
+    actionButton(inputId = &#39;submit&#39;, label = &#39;Submit&#39;)
+    )</code></pre>
+<p>You should have a box similar to this one:</p>
+<p><img src="img/IV_Ins.png" style="width:80%" align="center"></p>
+</div>
+<div id="changes-in-server.r" class="section level3" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Changes in
+server.R</h3>
+<p>Now we will do the respective changes in the server to execute the
+actions. We will use the function <code>observeEvent()</code> to react
+the submit button we created. Every time the button is clicked it will
+do the following:</p>
+<ul>
+<li>Open a message box showing the message “Uploading data”</li>
+<li>Create a data frame with the inputs for Name, Lat and Lon.</li>
+<li>Append this information to the Google sheet</li>
+<li>Remove the “Uploading data” message box</li>
+<li>Show another message box indicating the submission is
+completed.</li>
+</ul>
+<pre class="r"><code>observeEvent(input$submit, {
+    showModal(modalDialog(&quot;Uploading data&quot;, footer=NULL)) #Show first message
+    data.frame(Name = input$NameIn, # Create the data frame with the entries
+               Lat = input$LatIn,
+               Lon = input$LonIn) %&gt;% 
+      sheet_append(ss = Geolocations, data = .) # Append the data
+    
+    removeModal() # Remove first message box
+    
+    showModal(modalDialog( # Show message of confirmation
+      title = &quot;Submision complete&quot;,
+      paste0(&#39;Thanks for submiting the information&#39;),
+      easyClose = TRUE,
+      footer = NULL
+    ))
+  })</code></pre>
+<p>Try to submit an entry and you should get a message like this
+one:</p>
+<p><img src="img/IV_message.png" style="width:80%" align="center"></p>
 </div>
 </div>
-<div id="authorizing" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Authorizing</h1>
 </div>
-<div id="other-services" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Other services</h1>
-</div>
-<div id="point-data" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Point data</h1>
+<div id="dynamic-ui" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Dynamic UI</h1>
+<p>We can add and remove sections of the UI based on different events in
+our app.</p>
 <!-- 1. add input$MAPID_click reactive object -->
 <!-- 2. add rendered object -->
 <!-- 3. add Output -->

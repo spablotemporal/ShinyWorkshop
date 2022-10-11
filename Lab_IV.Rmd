@@ -7,21 +7,22 @@ output:
     number_sections: true
 ---
 
+```{r include = F}
+knitr::opts_chunk$set(message = F, warning = F, eval = F)
+```
+
+
 # Introduction.
 
 Objectives:  
 
-# Dynamic UI
-We can add and remove sections of the UI based on different events in our app. 
-
-# Integrating google sheets
+#  Google sheets
 
 We will use the packages `googledrive` and `googlesheets4` to save and load daa from google drive
 
 ```{r loading packages, message=F}
-# Install the package if not installed
 library(dplyr)
-library(ggplot2)
+# Install the package if not installed
 if(require('googledrive') == F){
  install.packages("googledrive") 
 }
@@ -29,6 +30,8 @@ if(require('googlesheets4') == F){
  install.packages("googlesheets4") 
 }
 ```
+
+## Authentication
   
 There are a couple of things we need to do to authorize R and our shiny app to use google sheets. First we will need to allow the session to catch the authentication information and then use the function `drive_auth()` and `gs4_auth()` to log into our drive. The auth information will be saved in a hidden file called *.secrets*, this file must be saved inside the folder that contains your shiny app.
   
@@ -72,6 +75,109 @@ dGL <- read_sheet(ss = Geolocations)
 
 dGL
 ```
+
+
+## Writing new entries to the data
+
+We can sue the function `sheet_apend()` to add new rows to our data. Lets create a data.frame that will be a single row, and then append this to the google sheet.
+
+```{r writing files, eval = F}
+data.frame(
+  Name = 'Location x', # You can try to change the name to something else to see the one you appended
+  Lat = 18.38841,
+  Lon = -100.73483
+  ) %>% 
+  sheet_append(ss = Geolocations)
+```
+
+If we go to our [google sheet](https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY), we will see the new observation we added.  
+
+We can also make the changes directly in the google sheet, and the next time we load the data we will see the changes.  
+
+<img src="img/IV_GSheet.png" style="width:60%" align="center">  
+
+Now that we know how to load and write data to google sheets, lets try to incorporate this in shiny.  
+
+## Incorporating in shiny
+
+### Changes in global.R
+
+It is important that the folder that contains your app has the file we created when authorizing the account, otherwise it will not work when you upload your app to a server, or run it in another session.  
+To tell shiny to use the correct auth file you have to add the following code to the global section of your app:
+
+```{r}
+# add the libraries we will sue:
+library(googledrive)
+library(googlesheets4)
+
+
+# Google drive set up
+options(
+  # whenever there is one account token found, use the cached token
+  gargle_oauth_email = TRUE,
+  # specify auth tokens should be stored in the hidden directory ".secrets"
+  gargle_oauth_cache = ".secrets"
+)
+# Specify the id for the file we will use
+Geolocations <- '1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY'
+```
+
+### Changes in ui.R
+
+Now lets create a few inputs so we can add new entries from our shiny app. We will add a new box to our third tab, this box will include the inputs for the columns we want to fill in our data for each row, and we will also create an action button to submit the information.
+
+```{r}
+box(title = 'Add New Observation', # title of the new box
+    width = 12,
+    textInput(inputId = 'NameIn', label = 'Name'), 
+    numericInput(inputId = 'LatIn', label = 'Latitude', value = 0),
+    numericInput(inputId = 'LonIn', label = 'Longitude', value = 0),
+    actionButton(inputId = 'submit', label = 'Submit')
+    )
+```
+
+You should have a box similar to this one:
+
+<img src="img/IV_Ins.png" style="width:80%" align="center">  
+
+### Changes in server.R
+
+Now we will do the respective changes in the server to execute the actions. We will use the function `observeEvent()` to react the submit button we created. Every time the button is clicked it will do the following:  
+  
+  - Open a message box showing the message "Uploading data"
+  - Create a data frame with the inputs for Name, Lat and Lon.
+  - Append this information to the Google sheet
+  - Remove the "Uploading data" message box 
+  - Show another message box indicating the submission is completed. 
+
+```{r}
+observeEvent(input$submit, {
+    showModal(modalDialog("Uploading data", footer=NULL)) #Show first message
+    data.frame(Name = input$NameIn, # Create the data frame with the entries
+               Lat = input$LatIn,
+               Lon = input$LonIn) %>% 
+      sheet_append(ss = Geolocations, data = .) # Append the data
+    
+    removeModal() # Remove first message box
+    
+    showModal(modalDialog( # Show message of confirmation
+      title = "Submision complete",
+      paste0('Thanks for submiting the information'),
+      easyClose = TRUE,
+      footer = NULL
+    ))
+  })
+```
+
+Try to submit an entry and you should get a message like this one:
+
+<img src="img/IV_message.png" style="width:80%" align="center">  
+
+
+
+# Dynamic UI
+
+We can add and remove sections of the UI based on different events in our app. 
 
 
 <!-- 1. add input$MAPID_click reactive object -->
