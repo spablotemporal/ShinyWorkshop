@@ -400,8 +400,13 @@ services</h1>
 <h1><span class="header-section-number">1</span> Introduction.</h1>
 <p>Objectives:</p>
 </div>
-<div id="integrating-google-sheets" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Integrating google
+<div id="dynamic-ui" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Dynamic UI</h1>
+<p>We can add and remove sections of the UI based on different events in
+our app.</p>
+</div>
+<div id="integrating-google-sheets" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Integrating google
 sheets</h1>
 <p>We will use the packages <code>googledrive</code> and
 <code>googlesheets4</code> to save and load daa from google drive</p>
@@ -438,8 +443,8 @@ list.files(&quot;misc/Code/Checkpoints/IIIa/.secrets&quot;)</code></pre>
 this in your web browser:</p>
 <p><img src="img/IV_AuthComplete.png" style="width:80%" align="center"></p>
 <div id="reading-files-from-your-drive" class="section level2"
-number="2.1">
-<h2><span class="header-section-number">2.1</span> Reading files from
+number="3.1">
+<h2><span class="header-section-number">3.1</span> Reading files from
 your Drive</h2>
 <p>To read files from the drive, you will need the id of the file you
 want to access. We can search for files in the drive with the function
@@ -452,8 +457,10 @@ specify the name.</p>
 the file we want to access (<a
 href="https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY"
 class="uri">https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY</a>),
-the id would be the last series of numbers.
+the id would be the last series of numbers:
 *1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY*</p>
+<p>To access the file we use the function <code>read_sheet()</code> and
+as argument we specify the id we want to read:</p>
 <pre class="r"><code># define the id for the file:
 Geolocations &lt;- &#39;1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY&#39;
 # Load data
@@ -466,22 +473,28 @@ dGL &lt;- read_sheet(ss = Geolocations)</code></pre>
 <pre><code>## ℹ The googlesheets4 package is using a cached token for &#39;]8;;mailto:jpgo@ucdavis.edujpgo@ucdavis.edu]8;;&#39;.</code></pre>
 <pre><code>## ✔ Reading from &quot;GeoLocations&quot;.</code></pre>
 <pre><code>## ✔ Range &#39;Sheet1&#39;.</code></pre>
+<pre class="r"><code>dGL</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   Name    Lat    Lon
+##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Loc1   18.6 -100. 
+## 2 Loc2   18.4 -101. 
+## 3 Loc3   19.1 -101. 
+## 4 Loc4   19.1  -99.2</code></pre>
 </div>
 </div>
-<div id="authorizing" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Authorizing</h1>
+<div id="authorizing" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Authorizing</h1>
 </div>
-<div id="other-services" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Other services</h1>
+<div id="other-services" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Other services</h1>
 </div>
-<div id="point-data" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Point data</h1>
-<ol style="list-style-type: decimal">
-<li>add input$MAPID_click reactive object</li>
-<li>add rendered object</li>
-<li>add Output</li>
-<li>Add the point</li>
-</ol>
+<div id="point-data" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Point data</h1>
+<!-- 1. add input$MAPID_click reactive object -->
+<!-- 2. add rendered object -->
+<!-- 3. add Output -->
+<!-- 4. Add the point -->
 </div>
 
 

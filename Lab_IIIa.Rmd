@@ -91,6 +91,7 @@ captura %>%
     rownames = FALSE,
     extensions = 'Buttons',
     options = list(
+      dom = "Blfrtip",
       buttons = list("copy",
                      list(extend = "collection",
                           buttons = c("csv", "excel", "pdf"),

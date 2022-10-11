@@ -74,17 +74,10 @@ dGL
 ```
 
 
-# Authorizing
-
-# Other services
-
-
-# Point data
-
-1. add input$MAPID_click reactive object
-2. add rendered object
-3. add Output
-4. Add the point
+<!-- 1. add input$MAPID_click reactive object -->
+<!-- 2. add rendered object -->
+<!-- 3. add Output -->
+<!-- 4. Add the point -->
 
 
 
