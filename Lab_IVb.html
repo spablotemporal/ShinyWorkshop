@@ -11,7 +11,7 @@
 
 
 
-<title>Lab IVa: Integrating google sheets</title>
+<title>Lab IVb: Improving user experience</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -390,186 +390,161 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Lab IVa: Integrating google sheets</h1>
+<h1 class="title toc-ignore">Lab IVb: Improving user experience</h1>
 
 </div>
 
 
-<div id="introduction." class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Introduction.</h1>
-<p>Objectives:</p>
+<div id="objective" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Objective</h1>
+<p>In this lab we will go over some more advanced methods to allow the
+user to interact with the maps in our dashboard.</p>
+<hr />
 </div>
-<div id="google-sheets" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Google sheets</h1>
-<p>We will use the packages <code>googledrive</code> and
-<code>googlesheets4</code> to save and load daa from google drive</p>
-<pre class="r"><code>library(dplyr)
-# Install the package if not installed
-if(require(&#39;googledrive&#39;) == F){
- install.packages(&quot;googledrive&quot;) 
-}
-if(require(&#39;googlesheets4&#39;) == F){
- install.packages(&quot;googlesheets4&quot;) 
-}</code></pre>
-<div id="authentication" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Authentication</h2>
-<p>There are a couple of things we need to do to authorize R and our
-shiny app to use google sheets. First we will need to allow the session
-to catch the authentication information and then use the function
-<code>drive_auth()</code> and <code>gs4_auth()</code> to log into our
-drive. The auth information will be saved in a hidden file called
-<em>.secrets</em>, this file must be saved inside the folder that
-contains your shiny app.</p>
-<pre class="r"><code># to catch the google drive auth must run this code first: ----------------
-# This part creates a folder where the auth info will be stored:
-options(
-  # whenever there is one account token found, use the cached token
-  gargle_oauth_email = TRUE,
-  # specify auth tokens should be stored in a hidden directory &quot;.secrets&quot;
-  gargle_oauth_cache = &quot;misc/Code/Checkpoints/IIIa/.secrets&quot;
-)
-# Then you have to authenticate your credentials for both packages:
-googledrive::drive_auth() 
-googlesheets4::gs4_auth()
-# To see the credentials you can use:
-list.files(&quot;misc/Code/Checkpoints/IIIa/.secrets&quot;)</code></pre>
-<p>Once the authentication is complete, you should see a message like
-this in your web browser:</p>
-<p><img src="img/IV_AuthComplete.png" style="width:80%" align="center"></p>
-</div>
-<div id="reading-files-from-your-drive" class="section level2"
-number="2.2">
-<h2><span class="header-section-number">2.2</span> Reading files from
-your Drive</h2>
-<p>To read files from the drive, you will need the id of the file you
-want to access. We can search for files in the drive with the function
-<code>drive_find()</code>, but depending how many files you have, this
-could take several minutes. If you are trying to access files from a
-shared drive, you can use the argument <code>shared_drive</code> and
-specify the name.</p>
-<pre class="r"><code>drive_find(pattern = &#39;GeoLocations&#39;, shared_drive = &#39;ShinyWorkshop&#39;)$id</code></pre>
-<p>You can also find the id in the link of the file. For example, for
-the file we want to access (<a
-href="https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY"
-class="uri">https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY</a>),
-the id would be the last series of numbers:
-*1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY*</p>
-<p>To access the file we use the function <code>read_sheet()</code> and
-as argument we specify the id we want to read:</p>
-<pre class="r"><code># define the id for the file:
-Geolocations &lt;- &#39;1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY&#39;
-# Load data
-dGL &lt;- read_sheet(ss = Geolocations)
-
-dGL</code></pre>
-</div>
-<div id="writing-new-entries-to-the-data" class="section level2"
-number="2.3">
-<h2><span class="header-section-number">2.3</span> Writing new entries
-to the data</h2>
-<p>We can sue the function <code>sheet_apend()</code> to add new rows to
-our data. Lets create a data.frame that will be a single row, and then
-append this to the google sheet.</p>
-<pre class="r"><code>data.frame(
-  Name = &#39;Location x&#39;, # You can try to change the name to something else to see the one you appended
-  Lat = 18.38841,
-  Lon = -100.73483
-  ) %&gt;% 
-  sheet_append(ss = Geolocations)</code></pre>
-<p>If we go to our <a
-href="https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY">google
-sheet</a>, we will see the new observation we added.</p>
-<p>We can also make the changes directly in the google sheet, and the
-next time we load the data we will see the changes.</p>
-<p><img src="img/IV_GSheet.png" style="width:60%" align="center"></p>
-<p>Now that we know how to load and write data to google sheets, lets
-try to incorporate this in shiny.</p>
-</div>
-<div id="incorporating-in-shiny" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Incorporating in
-shiny</h2>
-<div id="changes-in-global.r" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Changes in
-global.R</h3>
-<p>It is important that the folder that contains your app has the file
-we created when authorizing the account, otherwise it will not work when
-you upload your app to a server, or run it in another session.<br />
-To tell shiny to use the correct auth file you have to add the following
-code to the global section of your app:</p>
-<pre class="r"><code># add the libraries we will sue:
-library(googledrive)
-library(googlesheets4)
-
-
-# Google drive set up
-options(
-  # whenever there is one account token found, use the cached token
-  gargle_oauth_email = TRUE,
-  # specify auth tokens should be stored in the hidden directory &quot;.secrets&quot;
-  gargle_oauth_cache = &quot;.secrets&quot;
-)
-# Specify the id for the file we will use
-Geolocations &lt;- &#39;1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY&#39;</code></pre>
-</div>
-<div id="changes-in-ui.r" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> Changes in
-ui.R</h3>
-<p>Now lets create a few inputs so we can add new entries from our shiny
-app. We will add a new box to our third tab, this box will include the
-inputs for the columns we want to fill in our data for each row, and we
-will also create an action button to submit the information.</p>
+<div id="more-on-user-interaction" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> More on User
+Interaction</h1>
+<p>In this lab we will work mostly in the</p>
+<p>Instead of asking the user to provide the coordinates, we can use the
+leaflet map we previously created to select the location directly map.
+The leaflet Output can send some input events such as the user clicking
+on a map. We can use this as any other input objects and to refer to it
+have to any other inputs. For example, if we created the output
+<code>leafletOutput('CapturaMap')</code> we can refer to a position
+where the user clicks as <code>input$CapturaMap_click</code>.<br />
+This will return a list with the coordinates that we can later use.</p>
+<div id="changes-in-ui.r" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Changes in ui.R</h2>
+<p>We will modify our <code>ui.R</code> to show the coordinate values
+with an output instead of an input (as we had it before). We can put
+this output wherever we want, I will replace the Lat/Lon inputs we
+previously created with a <code>textOutput('MapLoc')</code> that will
+have the information coming from the leaflet map
+<code>CapturaMap</code>.</p>
 <pre class="r"><code>box(title = &#39;Add New Observation&#39;, # title of the new box
     width = 12,
     textInput(inputId = &#39;NameIn&#39;, label = &#39;Name&#39;), 
-    numericInput(inputId = &#39;LatIn&#39;, label = &#39;Latitude&#39;, value = 0),
-    numericInput(inputId = &#39;LonIn&#39;, label = &#39;Longitude&#39;, value = 0),
+    # numericInput(inputId = &#39;LatIn&#39;, label = &#39;Latitude&#39;, value = 0), # &lt;--- We can delete these inputs now
+    # numericInput(inputId = &#39;LonIn&#39;, label = &#39;Longitude&#39;, value = 0),
+    textOutput(&#39;MapLoc&#39;), #   &lt;---- And use this output to tell us the coordinated selected in the map instead
     actionButton(inputId = &#39;submit&#39;, label = &#39;Submit&#39;)
     )</code></pre>
-<p>You should have a box similar to this one:</p>
-<p><img src="img/IV_Ins.png" style="width:80%" align="center"></p>
 </div>
-<div id="changes-in-server.r" class="section level3" number="2.4.3">
-<h3><span class="header-section-number">2.4.3</span> Changes in
-server.R</h3>
-<p>Now we will do the respective changes in the server to execute the
-actions. We will use the function <code>observeEvent()</code> to react
-the submit button we created. Every time the button is clicked it will
-do the following:</p>
-<ul>
-<li>Open a message box showing the message “Uploading data”</li>
-<li>Create a data frame with the inputs for Name, Lat and Lon.</li>
-<li>Append this information to the Google sheet</li>
-<li>Remove the “Uploading data” message box</li>
-<li>Show another message box indicating the submission is
-completed.</li>
-</ul>
-<pre class="r"><code>observeEvent(input$submit, {
-    showModal(modalDialog(&quot;Uploading data&quot;, footer=NULL)) #Show first message
-    data.frame(Name = input$NameIn, # Create the data frame with the entries
-               Lat = input$LatIn,
-               Lon = input$LonIn) %&gt;% 
-      sheet_append(ss = Geolocations, data = .) # Append the data
-    
-    removeModal() # Remove first message box
-    
-    showModal(modalDialog( # Show message of confirmation
-      title = &quot;Submision complete&quot;,
-      paste0(&#39;Thanks for submiting the information&#39;),
-      easyClose = TRUE,
-      footer = NULL
-    ))
+<div id="changes-in-server.r" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Changes in
+server.R</h2>
+<p>Then we will make some changes in the server to create the
+<code>'MapLoc'</code> output.</p>
+<p>First we will create a new reactive object in our
+<code>server.R</code> file with this information:</p>
+<pre class="r"><code>Loc &lt;- reactive({
+    c(
+      input$CapturaMap_click[[1]], # Latitude
+      input$CapturaMap_click[[2]] # Longitude
+      )
   })</code></pre>
-<p>Try to submit an entry and you should get a message like this
-one:</p>
-<p><img src="img/IV_message.png" style="width:80%" align="center"></p>
+<p>Using the reactive object <code>Loc()</code> we can create the
+<code>'MapLoc'</code> output. We will use an if else statement so when
+the user will know that have to click on the map to select the location;
+when the user haven’t clicked on the map, the message ‘Click on the map
+to get the coordinates’ will be shown; otherwise the coordinates where
+the user clicked will be shown</p>
+<pre class="r"><code>output$MapLoc &lt;- renderText({
+    if(is.null(input$CapturaMap_click)){  # Show a message when the object input$CapturaMap_click is null 
+      &#39;Click on the map to get the coordinates&#39;
+    }else{
+      Loc() # Show the coordinates otherwise
+    }
+  })</code></pre>
+<p>Before clicking on the map, the user should see this:</p>
+<p><img src="img/IVb_click01.png" style="width:80%" align="center"></p>
+<p>After clicking on the map, the user should see the coordinates:</p>
+<p><img src="img/IVb_click02.png" style="width:80%" align="center"></p>
+<p>Now the inputs <code>input$LatIn</code> and <code>input$LonIn</code>
+no longer exist in our app, so we will have to replace them with
+<code>Loc()[1]</code> and <code>Loc()[2]</code> wherever we had it in
+the code. We were using the inputs <code>LatIn</code> and
+<code>LonIn</code> to write the information to the google sheet, so we
+will change that part of the code and will look like this instead:</p>
+<pre class="r"><code># Remember this part is in our server.R under an observeEvent
+# Save the data
+    data.frame(Name = input$NameIn,
+               Lat = Loc()[1],
+               Lon = Loc()[2]) %&gt;% 
+      sheet_append(ss = Geolocations, data = .)</code></pre>
 </div>
-<div id="exercise" class="section level3" number="2.4.4">
-<h3><span class="header-section-number">2.4.4</span> Exercise</h3>
-<p>Now try to integrate the locations from the google sheets into the
-app. The idea would be to first create a reactive object that reads the
-data from google sheets every time new info is submitted, and then this
-gets added to the leaflet map.</p>
 </div>
+<div id="few-more-features-of-leaflet" class="section level1"
+number="3">
+<h1><span class="header-section-number">3</span> Few more features of
+leaflet</h1>
+<p>To finish this workshop we will just mention a few more features from
+leaflet that can help with the user experience for our dashboards</p>
+<pre class="r"><code># Load libraries
+library(dplyr)
+library(sf)
+library(STNet)
+
+# Load data
+data(&quot;vac&quot;) # Data for vaccination
+data(&quot;vigilancia&quot;) # Data for surveillance
+data(&quot;captura&quot;)
+
+# Loading the spatial data from the package
+MxShp &lt;- st_read(system.file(&quot;data/MxShp.shp&quot;, package = &quot;STNet&quot;)) %&gt;% 
+  filter(CVE_ENT %in% c(&#39;15&#39;, &#39;12&#39;, &#39;16&#39;)) %&gt;%  # Filter the data to use the states with codes: 15, 12 y 16
+  st_transform(crs = st_crs(4326)) # transform to lat/long</code></pre>
+<p>Lets create a base leaflet map and save it in an object:</p>
+<pre class="r"><code>map &lt;- leaflet() %&gt;% 
+  addProviderTiles(providers$OpenStreetMap) %&gt;% 
+  addMarkers(
+    data = capturaSp,
+    # We can format the popup using some html tags
+    popup = ~paste(&#39;Name:&#39;, NOM_LOC, 
+                   &quot;&lt;br&gt;Captures:&quot;, CAPTURADOS) # The variable we are using for the label
+    )</code></pre>
+<div id="measurement" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Measurement</h2>
+<p>You can add a measurement tool with the function
+<code>addMeasure()</code>. This will allow the user to measure distance
+between points and areas. You should seee the measurement tool in the
+top right corner</p>
+<pre class="r"><code>map %&gt;% 
+  addMeasure()</code></pre>
+</div>
+<div id="inset-maps" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Inset maps</h2>
+<pre class="r"><code>map %&gt;% 
+  addMiniMap()</code></pre>
+<p>You can also change the base map for the inset mini maps and add
+other options.</p>
+<pre class="r"><code>map %&gt;% 
+  addMiniMap(tiles = providers$OpenTopoMap,
+             toggleDisplay = T)</code></pre>
+</div>
+<div id="adding-multiple-layers" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Adding multiple
+layers</h2>
+<p>We can add multiple layers and a menu to change between them, to do
+this we will first get all the layers from ESRI and then add them to the
+map with an option to change between layers.</p>
+<pre class="r"><code># get all the provider names with ESRI on the text
+esri &lt;- grep(&quot;^Esri&quot;, providers, value = TRUE) 
+
+# add all the providers to the map
+for (provider in esri) {
+  map &lt;- map %&gt;% addProviderTiles(provider, group = provider)
+}
+
+# Map the layers with the options to switch between layers
+map %&gt;%
+  addLayersControl(baseGroups = names(esri),
+    options = layersControlOptions(collapsed = FALSE)) %&gt;%
+  addMiniMap(tiles = esri[[1]], toggleDisplay = TRUE,
+    position = &quot;bottomleft&quot;)</code></pre>
+<p><a
+href="https://ucdavis.box.com/s/e8g3wilaksydnaprpzbc5sje4r0wvgik">You
+can download the checkpoint for this lab in this link</a></p>
 </div>
 </div>
 

@@ -72,8 +72,8 @@ You can access the pre-workshop materials in the following links:
     - Getting ready your app for distribution.
   - **Day 04:** Advanced reactivity and user interaction.
     - Data collection
-    - Integration of cloud based databases
-    - [Lab IV: Data collection and user interaction](Lab_IV.html)
+    - [Lab IVa: Integration of cloud based databases](Lab_IV.html)
+    - [Lab IVb: More on user interaction](Lab_IVb.html)
     
  
 
@@ -81,7 +81,7 @@ You can access the pre-workshop materials in the following links:
 Other useful information will be added here as we advance trough the workshop. This material will be often referenced during the sessions.  
 
   - [Rstudio Cloud project](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)
-  - [Shared folder](https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv), data used for preworkshop part 1 and code referenced in workshop
+  - [Shared folder](https://ucdavis.box.com/s/pztvmuct5ttes3iuaq3097w6thfp50ox), data used for preworkshop part 1 and code referenced in workshop
   - [R graph gallery](https://www.r-graph-gallery.com), Examples of different types of plots in R.  
   - [EPSG](https://epsg.io), Database of coordinate reference systems.  
   - [Shiny gallery](https://shiny.rstudio.com/gallery/). Examples of shiny apps.  

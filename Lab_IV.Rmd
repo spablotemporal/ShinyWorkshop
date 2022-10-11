@@ -1,5 +1,5 @@
 ---
-title: "Lab IV: Integrating cloud based services"
+title: "Lab IVa: Integrating google sheets"
 output:
   html_document:
     toc: true
@@ -12,9 +12,11 @@ knitr::opts_chunk$set(message = F, warning = F, eval = F)
 ```
 
 
-# Introduction.
+# Objective
 
-Objectives:  
+In this lab we will integrate google sheets to our shiny app. This can be very useful for data collection and real time incorporate new parts of information into our dashboard
+
+------------------------------
 
 #  Google sheets
 
@@ -173,17 +175,43 @@ Try to submit an entry and you should get a message like this one:
 
 <img src="img/IV_message.png" style="width:80%" align="center">  
 
+### Exercise
+
+Now try to integrate the locations from the google sheets into the app. The idea would be to first create a reactive object that reads the data from google sheets every time new info is submitted, and then this gets added to the leaflet map.
 
 
-# Dynamic UI
+```{r include=F, eval=F}
+# We will add this to the server
+dGL <- eventReactive(input$submit, {
+    read_sheet(ss = Geolocations) 
+  }, ignoreNULL = FALSE)
 
-We can add and remove sections of the UI based on different events in our app. 
+
+# To show the markers in the map we can add a line on the previously created leaflet map
+
+output$CapturaMap <- renderLeaflet({
+    # Creating a popup
+    leaflet() %>% 
+      addProviderTiles(providers$OpenStreetMap) %>% 
+    ## THIS WILL BE THE NEW LINES ADDING THE GOOGLE SHEETS DATA ##
+      addMarkers(data = dGL(), lat = ~Lat, lng = ~Lon,
+                 popup = ~paste('<h3>Name:', Name, '</h3>')) %>% 
+    ###############################################################
+      addMarkers( 
+        data = z(),
+        clusterOptions = markerClusterOptions(),
+        # We can format the popup using some html tags
+        popup = ~paste('<h3>Name:', NOM_LOC, '</h3>', 
+                       "<br>Captures:", CAPTURADOS,
+                       "<br>Location:", REFUGIO_NOM
+        ) # The variable we are using for the label
+      )
+  })
+```
 
 
-<!-- 1. add input$MAPID_click reactive object -->
-<!-- 2. add rendered object -->
-<!-- 3. add Output -->
-<!-- 4. Add the point -->
+
+[You can download the checkpoint for this lab in this link](https://ucdavis.box.com/s/ky2na35lejjc434943tl77q1oq23lwna)
 
 
 
