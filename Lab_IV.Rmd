@@ -1,0 +1,94 @@
+---
+title: "Lab IV: Integrating cloud based services"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+# Introduction.
+
+Objectives:  
+
+# Dynamic UI
+We can add and remove sections of the UI based on different events in our app. 
+
+# Integrating google sheets
+
+We will use the packages `googledrive` and `googlesheets4` to save and load daa from google drive
+
+```{r loading packages, message=F}
+# Install the package if not installed
+library(dplyr)
+library(ggplot2)
+if(require('googledrive') == F){
+ install.packages("googledrive") 
+}
+if(require('googlesheets4') == F){
+ install.packages("googlesheets4") 
+}
+```
+  
+There are a couple of things we need to do to authorize R and our shiny app to use google sheets. First we will need to allow the session to catch the authentication information and then use the function `drive_auth()` and `gs4_auth()` to log into our drive. The auth information will be saved in a hidden file called *.secrets*, this file must be saved inside the folder that contains your shiny app.
+  
+```{r set up drive, eval = F}
+# to catch the google drive auth must run this code first: ----------------
+# This part creates a folder where the auth info will be stored:
+options(
+  # whenever there is one account token found, use the cached token
+  gargle_oauth_email = TRUE,
+  # specify auth tokens should be stored in a hidden directory ".secrets"
+  gargle_oauth_cache = "misc/Code/Checkpoints/IIIa/.secrets"
+)
+# Then you have to authenticate your credentials for both packages:
+googledrive::drive_auth() 
+googlesheets4::gs4_auth()
+# To see the credentials you can use:
+list.files("misc/Code/Checkpoints/IIIa/.secrets")
+```
+
+Once the authentication is complete, you should see a message like this in your web browser:
+
+<img src="img/IV_AuthComplete.png" style="width:80%" align="center">
+
+## Reading files from your Drive
+
+To read files from the drive, you will need the id of the file you want to access. We can search for files in the drive with the function `drive_find()`, but depending how many files you have, this could take several minutes. If you are trying to access files from a shared drive, you can use the argument `shared_drive` and specify the name.  
+
+```{r eval = F}
+drive_find(pattern = 'GeoLocations', shared_drive = 'ShinyWorkshop')$id
+```
+
+You can also find the id in the link of the file. For example, for the file we want to access (https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY), the id would be the last series of numbers: *1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY*
+  
+To access the file we use the function `read_sheet()` and as argument we specify the id we want to read:
+  
+```{r reading files}
+# define the id for the file:
+Geolocations <- '1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY'
+# Load data
+dGL <- read_sheet(ss = Geolocations)
+
+dGL
+```
+
+
+# Authorizing
+
+# Other services
+
+
+# Point data
+
+1. add input$MAPID_click reactive object
+2. add rendered object
+3. add Output
+4. Add the point
+
+
+
+
+
+
+

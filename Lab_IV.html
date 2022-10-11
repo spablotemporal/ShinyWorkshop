@@ -11,7 +11,7 @@
 
 
 
-<title>Interactive geospatial visualization dashboards with R and Shiny.</title>
+<title>Lab IV: Integrating cloud based services</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,11 +29,12 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -230,6 +231,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -237,6 +301,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -316,172 +390,104 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Interactive geospatial visualization
-dashboards with R and Shiny.</h1>
+<h1 class="title toc-ignore">Lab IV: Integrating cloud based
+services</h1>
 
 </div>
 
 
-<!-- Spreadsheet of participants -->
-<!-- https://docs.google.com/spreadsheets/d/184S9FNeoSUVqSdlWB9_q-rvO6FbaNEr2Z0GyRGiadDo/edit#gid=1328193615 -->
-<div id="objectives" class="section level1">
-<h1>Objectives:</h1>
-<p>The objective of this workshop is to familiarize with the development
-of web apps using R and Shiny. Students will learn how to clean and
-process geospatial data with R to generate maps and other
-visualizations, and how to translate those into a interactive web
-dashboard that can be distributed and shared. By completing this
-workshop you will be able to:</p>
-<ul>
-<li>Identify the basic components for a shiny app</li>
-<li>Generate static and interactive maps with R</li>
-<li>Strategies to make your app more efficient</li>
-<li>Upload your application to a server so it can be shared and
-distributed.</li>
-</ul>
-<p>Previous knowledge with geospatial data and R helpful is desired, but
-not mandatory. Pre workshop materials covering the basics of R and
-geospatial data will be provided a few days before the workshop.</p>
-<hr />
+<div id="introduction." class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Introduction.</h1>
+<p>Objectives:</p>
 </div>
-<div id="who-is-this-course-for" class="section level1">
-<h1>Who is this course for?</h1>
-<p>Participants must have a basic understanding with R and spatial data.
-Pre-workshop materials and office hours will be offered to help with any
-questions regarding the material and installation of software. It is
-expected that the participants will already have installed the software
-since day 01 of the workshop.</p>
-<div id="tools-we-will-use" class="section level2">
-<h2>Tools we will use</h2>
-<ul>
-<li>Computer</li>
-<li><a href="https://cloud.r-project.org">R</a></li>
-<li><a href="https://www.rstudio.com/products/rstudio/">Rstudio</a></li>
-<li><a href="https://www.shinyapps.io">Shiny account</a></li>
-</ul>
-<hr />
+<div id="integrating-google-sheets" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Integrating google
+sheets</h1>
+<p>We will use the packages <code>googledrive</code> and
+<code>googlesheets4</code> to save and load daa from google drive</p>
+<pre class="r"><code># Install the package if not installed
+library(dplyr)
+library(ggplot2)
+if(require(&#39;googledrive&#39;) == F){
+ install.packages(&quot;googledrive&quot;) 
+}
+if(require(&#39;googlesheets4&#39;) == F){
+ install.packages(&quot;googlesheets4&quot;) 
+}</code></pre>
+<p>There are a couple of things we need to do to authorize R and our
+shiny app to use google sheets. First we will need to allow the session
+to catch the authentication information and then use the function
+<code>drive_auth()</code> and <code>gs4_auth()</code> to log into our
+drive. The auth information will be saved in a hidden file called
+<em>.secrets</em>, this file must be saved inside the folder that
+contains your shiny app.</p>
+<pre class="r"><code># to catch the google drive auth must run this code first: ----------------
+# This part creates a folder where the auth info will be stored:
+options(
+  # whenever there is one account token found, use the cached token
+  gargle_oauth_email = TRUE,
+  # specify auth tokens should be stored in a hidden directory &quot;.secrets&quot;
+  gargle_oauth_cache = &quot;misc/Code/Checkpoints/IIIa/.secrets&quot;
+)
+# Then you have to authenticate your credentials for both packages:
+googledrive::drive_auth() 
+googlesheets4::gs4_auth()
+# To see the credentials you can use:
+list.files(&quot;misc/Code/Checkpoints/IIIa/.secrets&quot;)</code></pre>
+<p>Once the authentication is complete, you should see a message like
+this in your web browser:</p>
+<p><img src="img/IV_AuthComplete.png" style="width:80%" align="center"></p>
+<div id="reading-files-from-your-drive" class="section level2"
+number="2.1">
+<h2><span class="header-section-number">2.1</span> Reading files from
+your Drive</h2>
+<p>To read files from the drive, you will need the id of the file you
+want to access. We can search for files in the drive with the function
+<code>drive_find()</code>, but depending how many files you have, this
+could take several minutes. If you are trying to access files from a
+shared drive, you can use the argument <code>shared_drive</code> and
+specify the name.</p>
+<pre class="r"><code>drive_find(pattern = &#39;GeoLocations&#39;, shared_drive = &#39;ShinyWorkshop&#39;)$id</code></pre>
+<p>You can also find the id in the link of the file. For example, for
+the file we want to access (<a
+href="https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY"
+class="uri">https://docs.google.com/spreadsheets/d/1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY</a>),
+the id would be the last series of numbers.
+*1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY*</p>
+<pre class="r"><code># define the id for the file:
+Geolocations &lt;- &#39;1ct-_meVE9GsIgTNpQa9n3SJKwXBApKAqdZ539xvSqdY&#39;
+# Load data
+dGL &lt;- read_sheet(ss = Geolocations)</code></pre>
+<pre><code>## ! Using an auto-discovered, cached token.</code></pre>
+<pre><code>##   To suppress this message, modify your code or options to clearly consent to
+##   the use of a cached token.</code></pre>
+<pre><code>##   See gargle&#39;s &quot;Non-interactive auth&quot; vignette for more details:</code></pre>
+<pre><code>##   &lt;]8;;https://gargle.r-lib.org/articles/non-interactive-auth.htmlhttps://gargle.r-lib.org/articles/non-interactive-auth.html]8;;&gt;</code></pre>
+<pre><code>## ℹ The googlesheets4 package is using a cached token for &#39;]8;;mailto:jpgo@ucdavis.edujpgo@ucdavis.edu]8;;&#39;.</code></pre>
+<pre><code>## ✔ Reading from &quot;GeoLocations&quot;.</code></pre>
+<pre><code>## ✔ Range &#39;Sheet1&#39;.</code></pre>
 </div>
 </div>
-<div id="pre-workshop-materials" class="section level1">
-<h1>Pre workshop materials</h1>
-<p>It is highly encouraged, that the participants have a look at the pre
-workshop material before the start of of the workshop. The pre-workshop
-materials consist on 3 labs that cover the basics of R and spatial data
-manipulation. The <em>day 0</em> will consist on office hours to assist
-the participants with any problems or questions regarding the
-pre-workshop materials, It is expected that the participants will have
-already the software installed and ready to go since day 01 of the
-workshop.<br />
-You can access the pre-workshop materials in the following links:</p>
-<ul>
-<li><a href="0a_R_Intro.html">Software installation</a><br />
-</li>
-<li><a href="0b_Intro_to_R.html">Intro to R</a><br />
-</li>
-<li><a href="0c_Spatial_intro.html">Intro to Spatial data</a></li>
-</ul>
+<div id="authorizing" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Authorizing</h1>
 </div>
-<div id="workshop-schedule" class="section level1">
-<h1>Workshop schedule</h1>
-<!-- Sessions will be on Saturdays 10 am - 1 pm -->
-<!-- [Link del proyecto en Rstudio Cloud](https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0)   -->
-<!-- [Link for shared folder](https://ucdavis.box.com/s/v2wlgjm16bl8vo02ujd7hk5yduuulywi) -->
-<ul>
-<li><p><a
-href="https://usfca.zoom.us/rec/share/5Un6Oub98DYyMb6PPzN__k8Q9BcjQp1a2gYJmyQN-8b8IHRocuQ0fKVVbOrT-pXU.Q7KngTt0KmHe_g73?startTime=1664324166000"><strong>Day
-00 (optional):</strong></a> Installation of software and office
-hours.</p></li>
-<li><p><a
-href="https://usfca.zoom.us/rec/share/g2887xi8UxQlwMFWXCdCB45P44DwxFORifIMQ9vBinH49wmzFviWkCQ041llnq8.7CTPVU3gNNeX615Z"><strong>Day
-01:</strong> Getting started with Shiny.</a></p>
-<ul>
-<li><a href="Ia_Components.html">Basic components of a Shiny
-App</a></li>
-<li><a href="Lab_Ia.html">Lab Ia: Creating your first app</a><br />
-</li>
-<li><a href="Ib_InsOuts.html">Inputs outputs and server</a><br />
-</li>
-<li><a href="Lab_Ib.html">Lab Ib: Inputs and Outputs</a>, <a
-href="https://ucdavis.box.com/s/zq7txay3smz96ra72hrl9brsq52v78lm">Checkpoint</a><br />
-</li>
-</ul></li>
-<li><p><a
-href="(https://usfca.zoom.us/rec/share/fjhmzl_ftjkwz4qySnyZmXHCE0vD5jtqIzLCudTUU6kA4lUVVuhhEFOSYNl0S4RF.mgmmIkPi3XYLap90)"><strong>Day
-02:</strong> Setting up your development environment</a></p>
-<ul>
-<li><a href="IIa_ShinyDash.html">Designing the user interface</a></li>
-<li><a href="Lab_IIa.html">Lab IIa: Introduction to shinydashboard</a>,
-<a
-href="https://ucdavis.box.com/s/zs78vmnjkbkv2b385ydj8p6bvhmkg4sp">Checkpoint</a></li>
-<li><a href="IIb_Reactivity.html">Implementing user interaction</a></li>
-<li><a href="Lab_IIb.html">Lab IIb: Reactivity</a>, <a
-href="https://ucdavis.box.com/s/4z6p2s1gcpvrheqqqbrv59ctrz1fx7y3">Checkpoint</a><br />
-</li>
-</ul></li>
-<li><p><a
-href="https://usfca.zoom.us/rec/share/RxexNVcBuemsGfaBnUiIJr4q3PPynrf42UrhZMSuhnn6tS-MQeJzB-eXNbpfMP_G.PwptN1ZAjZ276OJs"><strong>Day
-03:</strong> Advance graphics and publishing your shiny app</a></p>
-<ul>
-<li>Advanced visualization tools</li>
-<li><a href="Lab_IIIa.html">Lab III: Integrating advanced
-visualizations.</a></li>
-<li>Getting ready your app for distribution.</li>
-</ul></li>
-<li><p><strong>Day 04:</strong> Advanced reactivity and user
-interaction.</p>
-<ul>
-<li>Data collection</li>
-<li>Integration of cloud based databases</li>
-<li><a href="Lab_IV.html">Lab IV: Data collection and user
-interaction</a></li>
-</ul></li>
-</ul>
+<div id="other-services" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Other services</h1>
 </div>
-<div id="other-links" class="section level1">
-<h1>Other links:</h1>
-<p>Other useful information will be added here as we advance trough the
-workshop. This material will be often referenced during the
-sessions.</p>
-<ul>
-<li><a
-href="https://rstudio.cloud/spaces/227267/join?access_code=BSSXEMnL078kkrh7zuAZSipB0IUzzDCM0JyZh_s0">Rstudio
-Cloud project</a></li>
-<li><a
-href="https://ucdavis.app.box.com/folder/174771408063?s=cltv7bcwblxw5v90z5l56ognt9dprehv">Shared
-folder</a>, data used for preworkshop part 1 and code referenced in
-workshop</li>
-<li><a href="https://www.r-graph-gallery.com">R graph gallery</a>,
-Examples of different types of plots in R.<br />
-</li>
-<li><a href="https://epsg.io">EPSG</a>, Database of coordinate reference
-systems.<br />
-</li>
-<li><a href="https://shiny.rstudio.com/gallery/">Shiny gallery</a>.
-Examples of shiny apps.<br />
-</li>
-<li><a
-href="https://shiny.rstudio.com/gallery/widget-gallery.html">Shiny
-widget gallery</a></li>
-<li><a href="https://shiny.rstudio.com/articles/tag-glossary.html">Shiny
-tags glossary</a>.</li>
-<li><a href="https://plotly.com/r/">Plotly documentation</a></li>
-<li><a
-href="https://rstudio.github.io/shinydashboard/structure.html">ShinyDashbiard
-documentation</a>
-<!-- - [Shiny cheatsheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf) -->
-<!-- - [Otras paqueterias para graficos interactivos](https://www.htmlwidgets.org/showcase_leaflet.html) --></li>
-</ul>
-<!-- Algunas fuentes de datos para el proyecto -->
-<!--   - https://www.kaggle.com/datasets -->
-<!--   - http://www.mgc.ac.cn/cgi-bin/DBatVir/main.cgi?func=map -->
-<!--   - https://wahis.oie.int/#/home -->
-<!--   - https://datos.cdmx.gob.mx -->
-<!--   - https://datamexico.org -->
-<!--   - https://www.inegi.org.mx/app/mapa/espacioydatos/ -->
+<div id="point-data" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Point data</h1>
+<ol style="list-style-type: decimal">
+<li>add input$MAPID_click reactive object</li>
+<li>add rendered object</li>
+<li>add Output</li>
+<li>Add the point</li>
+</ol>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -514,6 +520,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
