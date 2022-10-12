@@ -61,7 +61,7 @@ You can access the pre-workshop materials in the following links:
     - [Lab Ia: Creating your first app](Lab_Ia.html)  
     - [Inputs outputs and server](Ib_InsOuts.html)  
     - [Lab Ib: Inputs and Outputs](Lab_Ib.html), [Checkpoint](https://ucdavis.box.com/s/zq7txay3smz96ra72hrl9brsq52v78lm)  
-  - [**Day 02:** Setting up your development environment]((https://usfca.zoom.us/rec/share/fjhmzl_ftjkwz4qySnyZmXHCE0vD5jtqIzLCudTUU6kA4lUVVuhhEFOSYNl0S4RF.mgmmIkPi3XYLap90))
+  - [**Day 02:** Setting up your development environment](https://usfca.zoom.us/rec/share/E_8dcBVZNWl1zYhhQRaGpr570T91W6KnM4uwNu_Kez6oIIYuiJjF_itUTY1T2B0.ETBjfDL-qo5XCR4x)
     - [Designing the user interface](IIa_ShinyDash.html)
     - [Lab IIa: Introduction to shinydashboard](Lab_IIa.html), [Checkpoint](https://ucdavis.box.com/s/zs78vmnjkbkv2b385ydj8p6bvhmkg4sp)
     - [Implementing user interaction](IIb_Reactivity.html)
@@ -71,7 +71,6 @@ You can access the pre-workshop materials in the following links:
     - [Lab III: Integrating advanced visualizations.](Lab_IIIa.html)
     - Getting ready your app for distribution.
   - **Day 04:** Advanced reactivity and user interaction.
-    - Data collection
     - [Lab IVa: Integration of cloud based databases](Lab_IV.html)
     - [Lab IVb: More on user interaction](Lab_IVb.html)
     
