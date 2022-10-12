@@ -86,6 +86,14 @@ Now the inputs `input$LatIn` and `input$LonIn` no longer exist in our app, so we
       sheet_append(ss = Geolocations, data = .)
 ```
 
+## Rendering UI elements
+
+We can also 
+
+
+[You can download the checkpoint for this lab in this link](https://ucdavis.box.com/s/e8g3wilaksydnaprpzbc5sje4r0wvgik)
+
+-----------------------------------
 
 # Few more features of leaflet
 
@@ -170,7 +178,7 @@ map %>%
 ```
 
 
-[You can download the checkpoint for this lab in this link](https://ucdavis.box.com/s/e8g3wilaksydnaprpzbc5sje4r0wvgik)
+
 
 
 

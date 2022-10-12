@@ -68,7 +68,7 @@ You can access the pre-workshop materials in the following links:
     - [Lab IIb: Reactivity](Lab_IIb.html), [Checkpoint](https://ucdavis.box.com/s/4z6p2s1gcpvrheqqqbrv59ctrz1fx7y3)  
   - [**Day 03:** Advance graphics and publishing your shiny app](https://usfca.zoom.us/rec/share/RxexNVcBuemsGfaBnUiIJr4q3PPynrf42UrhZMSuhnn6tS-MQeJzB-eXNbpfMP_G.PwptN1ZAjZ276OJs)
     - Advanced visualization tools
-    - [Lab III: Integrating advanced visualizations.](Lab_IIIa.html)
+    - [Lab III: Integrating advanced visualizations.](Lab_IIIa.html), [Checkpoint](https://ucdavis.box.com/s/y79z6wnds3c90w5d1c99w68g17ncyamk)
     - Getting ready your app for distribution.
   - **Day 04:** Advanced reactivity and user interaction.
     - [Lab IVa: Integration of cloud based databases](Lab_IV.html)
