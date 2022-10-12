@@ -134,6 +134,10 @@ Like any other shiny Output, we have to create it using its respective function,
 
 # Few more features of leaflet
 
+```{r include = F, eval=T}
+knitr::opts_chunk$set(message = F, warning = F, eval = T)
+```
+
 To finish this workshop we will just mention a few more features from leaflet that can help with the user experience for our dashboards
 
 
@@ -142,6 +146,7 @@ To finish this workshop we will just mention a few more features from leaflet th
 library(dplyr)
 library(sf)
 library(STNet)
+library(leaflet)
 
 # Load data
 data("vac") # Data for vaccination
@@ -152,6 +157,10 @@ data("captura")
 MxShp <- st_read(system.file("data/MxShp.shp", package = "STNet")) %>% 
   filter(CVE_ENT %in% c('15', '12', '16')) %>%  # Filter the data to use the states with codes: 15, 12 y 16
   st_transform(crs = st_crs(4326)) # transform to lat/long
+
+# Transform it to spatial points
+capturaSp <- captura %>% 
+  st_as_sf(coords = c('LONG', 'LATITUD'), crs = st_crs(4326)) 
 ```
 
 Lets create a base leaflet map and save it in an object:
