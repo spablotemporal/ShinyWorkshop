@@ -88,7 +88,44 @@ Now the inputs `input$LatIn` and `input$LonIn` no longer exist in our app, so we
 
 ## Rendering UI elements
 
-We can also 
+We can also create dynamic UI elements that will appear under certain conditions (i.e. when buttons are clicked, or some information is present). To do this we use the functions: `uiOutput()` and `renderUI()`. In this example we will move the inputs for sumbiting information to a dynamic UI.
+
+### modifying the ui.R
+
+First we will modify our box where the inputs are. We create a new checkbox input to show/hide this options, and a `uiOutput()`
+
+```{r}
+box(title = 'Add New Observation', width = 12,
+    checkboxInput(inputId = 'NewEntry', label = 'Add New Observation'), # Option to show/hide UI
+    uiOutput(outputId = 'NameOut'), # <---- This is our new dynamic UI
+    tableOutput('LocationsDF')
+                         )
+```
+
+### modifying the server.R
+
+Like any other shiny Output, we have to create it using its respective function, which in this case will be `renderUI()`
+
+```{r}
+# Render the new inputs
+  output$NameOut <- renderUI({
+    if(input$NewEntry){ # Only render when the checkbox is active
+      tagList( # Create a couple of input objects
+        'Lat/Long:', shiny::textOutput('MapLoc'), # This are the lat/lon coords
+        shiny::textInput(inputId = 'NameIn', label = 'Name'), # this is the 
+        actionButton(inputId = 'submit', label = 'Submit')
+      )
+    }
+  })
+```
+
+ Now we should see something like this:
+ 
+ <img src="img/IV_UIoff.png" style="width:80%" align="center">  
+ 
+ And when we check the box, the inputs will appear:
+ 
+ <img src="img/IV_UIon.png" style="width:80%" align="center">  
 
 
 [You can download the checkpoint for this lab in this link](https://ucdavis.box.com/s/e8g3wilaksydnaprpzbc5sje4r0wvgik)

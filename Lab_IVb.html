@@ -473,6 +473,52 @@ will change that part of the code and will look like this instead:</p>
                Lon = Loc()[2]) %&gt;% 
       sheet_append(ss = Geolocations, data = .)</code></pre>
 </div>
+<div id="rendering-ui-elements" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Rendering UI
+elements</h2>
+<p>We can also create dynamic UI elements that will appear under certain
+conditions (i.e. when buttons are clicked, or some information is
+present). To do this we use the functions: <code>uiOutput()</code> and
+<code>renderUI()</code>. In this example we will move the inputs for
+sumbiting information to a dynamic UI.</p>
+<div id="modifying-the-ui.r" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> modifying the
+ui.R</h3>
+<p>First we will modify our box where the inputs are. We create a new
+checkbox input to show/hide this options, and a
+<code>uiOutput()</code></p>
+<pre class="r"><code>box(title = &#39;Add New Observation&#39;, width = 12,
+    checkboxInput(inputId = &#39;NewEntry&#39;, label = &#39;Add New Observation&#39;), # Option to show/hide UI
+    uiOutput(outputId = &#39;NameOut&#39;), # &lt;---- This is our new dynamic UI
+    tableOutput(&#39;LocationsDF&#39;)
+                         )</code></pre>
+</div>
+<div id="modifying-the-server.r" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> modifying the
+server.R</h3>
+<p>Like any other shiny Output, we have to create it using its
+respective function, which in this case will be
+<code>renderUI()</code></p>
+<pre class="r"><code># Render the new inputs
+  output$NameOut &lt;- renderUI({
+    if(input$NewEntry){ # Only render when the checkbox is active
+      tagList( # Create a couple of input objects
+        &#39;Lat/Long:&#39;, shiny::textOutput(&#39;MapLoc&#39;), # This are the lat/lon coords
+        shiny::textInput(inputId = &#39;NameIn&#39;, label = &#39;Name&#39;), # this is the 
+        actionButton(inputId = &#39;submit&#39;, label = &#39;Submit&#39;)
+      )
+    }
+  })</code></pre>
+<p>Now we should see something like this:</p>
+<p><img src="img/IV_UIoff.png" style="width:80%" align="center"></p>
+<p>And when we check the box, the inputs will appear:</p>
+<p><img src="img/IV_UIon.png" style="width:80%" align="center"></p>
+<p><a
+href="https://ucdavis.box.com/s/e8g3wilaksydnaprpzbc5sje4r0wvgik">You
+can download the checkpoint for this lab in this link</a></p>
+<hr />
+</div>
+</div>
 </div>
 <div id="few-more-features-of-leaflet" class="section level1"
 number="3">
@@ -542,9 +588,6 @@ map %&gt;%
     options = layersControlOptions(collapsed = FALSE)) %&gt;%
   addMiniMap(tiles = esri[[1]], toggleDisplay = TRUE,
     position = &quot;bottomleft&quot;)</code></pre>
-<p><a
-href="https://ucdavis.box.com/s/e8g3wilaksydnaprpzbc5sje4r0wvgik">You
-can download the checkpoint for this lab in this link</a></p>
 </div>
 </div>
 
